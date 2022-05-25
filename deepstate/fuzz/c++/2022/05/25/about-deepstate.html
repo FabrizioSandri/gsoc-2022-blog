@@ -79,7 +79,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      6 min read
     
 </span></p>
 
@@ -122,6 +122,7 @@ window.onload = wrap_img;
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#fuzz-test-execution">Fuzz test execution</a></li>
+<li class="toc-entry toc-h2"><a href="#advanced-fuzz-testing">Advanced fuzz testing</a></li>
 </ul>
 </li>
 </ul><h1 id="deepstate-introduction">
@@ -258,7 +259,16 @@ make
 
 <h2 id="fuzz-test-execution">
 <a class="anchor" href="#fuzz-test-execution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fuzz test execution</h2>
-<p>….. Work in progress</p>
+<p>The compiled test harness can be executed using some analysis tools like <code class="language-plaintext highlighter-rouge">manticore</code>, <code class="language-plaintext highlighter-rouge">angr</code> or <code class="language-plaintext highlighter-rouge">valgrind</code> to discover memory leaks in the code. You can also run it in a standalone mode by executing it directly in the console with the <code class="language-plaintext highlighter-rouge">--fuzz</code> option. This last option enables DeepState to perform brute force fuzzing. Another useful option is <code class="language-plaintext highlighter-rouge">--timeout</code> that allows to specify a timeout(in seconds) after which the fuzzing procedure will be stopped. In addition with the <code class="language-plaintext highlighter-rouge">--input_which_test</code> you can specify the test to execute in the format <code class="language-plaintext highlighter-rouge">UnitName_TestName</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./harness <span class="nt">--fuzz</span> <span class="nt">--timeout</span><span class="o">=</span>5 <span class="nt">--input_which_test</span> UnitName_TestName
+</code></pre></div></div>
+
+<p>This execution will give us the total number of <em>failed</em>, <em>passed</em> and <em>abandoned</em> tests</p>
+
+<h2 id="advanced-fuzz-testing">
+<a class="anchor" href="#advanced-fuzz-testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advanced fuzz testing</h2>
+<p>I’ll go through how to use DeepState in conjunction with more complex tools like Valgrind in the next blog posts.</p>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
