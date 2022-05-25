@@ -120,7 +120,17 @@ g++ -ldeepstate -o harness harness.cpp
 The output of this procedure is a compiled harness file that can be executed.
 
 ## Fuzz test execution
-..... Work in progress
+The compiled test harness can be executed using some analysis tools like `manticore`, `angr` or `valgrind` to discover memory leaks in the code. You can also run it in a standalone mode by executing it directly in the console with the `--fuzz` option. This last option enables DeepState to perform brute force fuzzing. Another useful option is `--timeout` that allows to specify a timeout(in seconds) after which the fuzzing procedure will be stopped. In addition with the `--input_which_test` you can specify the test to execute in the format `UnitName_TestName`.
+
+```bash
+./harness --fuzz --timeout=5 --input_which_test UnitName_TestName
+```
+
+This execution will give us the total number of _failed_, _passed_ and _abandoned_ tests
+
+## Advanced fuzz testing
+I'll go through how to use DeepState in conjunction with more complex tools like Valgrind in the next blog posts.
+
 
 [^1]: [https://google.github.io/googletest/](https://google.github.io/googletest/)
 [^2]: [https://github.com/trailofbits/deepstate#buildnrun](https://github.com/trailofbits/deepstate#buildnrun)
