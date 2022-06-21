@@ -1,7 +1,7 @@
 ---
 toc: true
 layout: post
-description: Make DeepState fuzz testing with Rcpp, deterministic. Solution implemented in the pull request \#5
+description: Make DeepState fuzz testing with Rcpp, deterministic. Solution implemented in the pull request \#6
 badges: true
 categories: [DeepState, Rcpp, c++, R]
 comments: true
@@ -166,4 +166,4 @@ WARNING: No test specified, defaulting to first test defined (Unit_name)
 750 729 474 863 43 482
 ```
 
-This problem is resolved in the [pull request #5](https://github.com/FabrizioSandri/RcppDeepState/pull/5).
+This problem is resolved in the [pull request #6](https://github.com/FabrizioSandri/RcppDeepState/pull/6).
