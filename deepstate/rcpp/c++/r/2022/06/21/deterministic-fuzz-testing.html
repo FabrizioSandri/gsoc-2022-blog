@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Deterministic fuzz testing with DeepState and Rcpp | GSOC 2022</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Deterministic fuzz testing with DeepState and Rcpp" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Make DeepState fuzz testing with Rcpp, deterministic. Solution implemented in the pull request #5" />
+<meta property="og:description" content="Make DeepState fuzz testing with Rcpp, deterministic. Solution implemented in the pull request #5" />
+<link rel="canonical" href="https://fabriziosandri.github.io/gsoc-2022-blog/deepstate/rcpp/c++/r/2022/06/21/deterministic-fuzz-testing.html" />
+<meta property="og:url" content="https://fabriziosandri.github.io/gsoc-2022-blog/deepstate/rcpp/c++/r/2022/06/21/deterministic-fuzz-testing.html" />
+<meta property="og:site_name" content="GSOC 2022" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-06-21T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Deterministic fuzz testing with DeepState and Rcpp" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-06-21T00:00:00-05:00","datePublished":"2022-06-21T00:00:00-05:00","description":"Make DeepState fuzz testing with Rcpp, deterministic. Solution implemented in the pull request #5","headline":"Deterministic fuzz testing with DeepState and Rcpp","mainEntityOfPage":{"@type":"WebPage","@id":"https://fabriziosandri.github.io/gsoc-2022-blog/deepstate/rcpp/c++/r/2022/06/21/deterministic-fuzz-testing.html"},"url":"https://fabriziosandri.github.io/gsoc-2022-blog/deepstate/rcpp/c++/r/2022/06/21/deterministic-fuzz-testing.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/gsoc-2022-blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://fabriziosandri.github.io/gsoc-2022-blog/feed.xml" title="GSOC 2022" /><link rel="shortcut icon" type="image/x-icon" href="/gsoc-2022-blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/gsoc-2022-blog/">GSOC 2022</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/gsoc-2022-blog/search/">Search</a><a class="page-link" href="/gsoc-2022-blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Deterministic fuzz testing with DeepState and Rcpp</h1><p class="page-description">Make DeepState fuzz testing with Rcpp, deterministic. Solution implemented in the pull request \#5</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-06-21T00:00:00-05:00" itemprop="datePublished">
+        Jun 21, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      4 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/gsoc-2022-blog/categories/#DeepState">DeepState</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/gsoc-2022-blog/categories/#Rcpp">Rcpp</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/gsoc-2022-blog/categories/#c++">c++</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/gsoc-2022-blog/categories/#R">R</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#motivation">Motivation</a></li>
+<li class="toc-entry toc-h2"><a href="#example">Example</a></li>
+<li class="toc-entry toc-h2"><a href="#solution">Solution</a></li>
+</ul><h2 id="motivation">
+<a class="anchor" href="#motivation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Motivation</h2>
+<p>While searching for a way to perform non deterministic fuzz testing (using some kind of seeds) to be used in the workflow for the <a href="https://github.com/FabrizioSandri/RcppDeepState/pull/6">pull request #6</a>, I discovered that the seed would not work if the RInside declaration is made inside the <code class="language-plaintext highlighter-rouge">TEST</code> macro of the test Harness.
+Let’s have a look at an example.</p>
+
+<h2 id="example">
+<a class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+<p>Recall to the example of the previous post, where we wanted to perform fuzz testing on a simple Rcpp function that takes an integer vector as input and returns the first element. 
+Let’s say we want to discover a seed that will allow us to replicate the DeepState inputs throughout several executions, in a way that the execution will be deterministic. Let’s add a <code class="language-plaintext highlighter-rouge">cout</code> at line 36 in order to observe the inputs generated by DeepState.</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;Rcpp.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;RInside.h&gt;</span><span class="cp">
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;deepstate/DeepState.hpp&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">deepstate</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">int</span> <span class="nf">getFirstElement</span><span class="p">(</span><span class="n">Rcpp</span><span class="o">::</span><span class="n">IntegerVector</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// random IntegerVector generation procedure</span>
+<span class="n">Rcpp</span><span class="o">::</span><span class="n">IntegerVector</span> <span class="nf">randomIntegerVector</span><span class="p">(</span><span class="kt">int</span> <span class="n">maxSize</span><span class="p">){</span>
+
+    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">DeepState_IntInRange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">maxSize</span><span class="p">);</span>
+    <span class="n">Rcpp</span><span class="o">::</span><span class="n">IntegerVector</span> <span class="n">vec</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">DeepState_IntInRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">);</span>
+    <span class="p">}</span>
+  
+    <span class="k">return</span> <span class="n">vec</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Unit</span><span class="p">,</span> <span class="n">name</span><span class="p">){</span>
+    <span class="k">static</span> <span class="n">RInside</span> <span class="n">R</span><span class="p">;</span>
+    
+    <span class="n">Rcpp</span><span class="o">::</span><span class="n">IntegerVector</span> <span class="n">randomVec</span> <span class="o">=</span> <span class="n">randomIntegerVector</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">randomVec</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">getFirstElement</span><span class="p">(</span><span class="n">randomVec</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The result will change across several executions regardless of whether this harness is executed using the <code class="language-plaintext highlighter-rouge">--seed=1</code> argument.
+The first ten lines of output from two distinct runs are shown below, and it appears that the seed option has no influence on the produced input.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./getFirstElement <span class="nt">--fuzz</span> <span class="nt">--timeout</span><span class="o">=</span>1 <span class="nt">--seed</span><span class="o">=</span>1 | <span class="nb">head
+</span>INFO: Starting fuzzing
+WARNING: No <span class="nb">test </span>specified, defaulting to first <span class="nb">test </span>defined <span class="o">(</span>Unit_name<span class="o">)</span>
+808 622 869 877 455 672 774 844
+240 910 915 474 182 907 28 1000 921 295
+168 356 675
+825 344 511 36 735 784 573 715 622 338 351 542
+750 202 746 817 227 9 588 973 14 4 194 627 987 249 578 315 275
+415 918 1 777 966 69 806 69 559 978 421 300
+867 214 429 872 755 856 345 993 722
+942 378 593 210 780 393 760 430 106 400 846 144
+767 669 263 278 872 625
+265 58 203 89 832 969 144 952 266 192 975 327 386 816 946 35
+
+<span class="nv">$ </span>./getFirstElement <span class="nt">--fuzz</span> <span class="nt">--timeout</span><span class="o">=</span>1 <span class="nt">--seed</span><span class="o">=</span>1 | <span class="nb">head
+</span>INFO: Starting fuzzing
+WARNING: No <span class="nb">test </span>specified, defaulting to first <span class="nb">test </span>defined <span class="o">(</span>Unit_name<span class="o">)</span>
+657 470 974 648 599 658 812 515 388 162 698 87 20 672 429
+355 22 104 1000 742 779 948 157 630 840 336 616 666 220 185 76 965 220 18
+531 484 232 85
+76 959 388 473 630 390 997 619 474 386 449 650 255 520 717 909 775 783 249 75
+988 668
+422
+595
+767 182 417 60 691 783 972 996 740 220 732 19 390 253 704 89 329 815
+520 122 600 111 27 796 541 591 778 352 673 205 195 526 73
+318 380 155 221 972 540 668 985 462 953 175
+</code></pre></div></div>
+
+<h2 id="solution">
+<a class="anchor" href="#solution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Solution</h2>
+<p>This peculiar behavior, I discovered, is caused by the RInside statement within the <code class="language-plaintext highlighter-rouge">TEST</code> macro. The seed will work if the above program is modified by shifting the RInside declaration to the beginning and deleting the <code class="language-plaintext highlighter-rouge">static</code> keyword.</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;Rcpp.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;RInside.h&gt;</span><span class="cp">
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;deepstate/DeepState.hpp&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">deepstate</span><span class="p">;</span>
+
+<span class="n">RInside</span> <span class="n">Rinstance</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">int</span> <span class="nf">getFirstElement</span><span class="p">(</span><span class="n">Rcpp</span><span class="o">::</span><span class="n">IntegerVector</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// random IntegerVector generation procedure</span>
+<span class="n">Rcpp</span><span class="o">::</span><span class="n">IntegerVector</span> <span class="nf">randomIntegerVector</span><span class="p">(</span><span class="kt">int</span> <span class="n">maxSize</span><span class="p">){</span>
+
+    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">DeepState_IntInRange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">maxSize</span><span class="p">);</span>
+    <span class="n">Rcpp</span><span class="o">::</span><span class="n">IntegerVector</span> <span class="n">vec</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">DeepState_IntInRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">);</span>
+    <span class="p">}</span>
+  
+    <span class="k">return</span> <span class="n">vec</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Unit</span><span class="p">,</span> <span class="n">name</span><span class="p">){</span>
+    
+    <span class="n">Rcpp</span><span class="o">::</span><span class="n">IntegerVector</span> <span class="n">randomVec</span> <span class="o">=</span> <span class="n">randomIntegerVector</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">randomVec</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">getFirstElement</span><span class="p">(</span><span class="n">randomVec</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The output will now remain the same over multiple executions</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./getFirstElement <span class="nt">--fuzz</span> <span class="nt">--timeout</span><span class="o">=</span>1 <span class="nt">--seed</span><span class="o">=</span>1 | <span class="nb">head
+</span>INFO: Starting fuzzing
+WARNING: No <span class="nb">test </span>specified, defaulting to first <span class="nb">test </span>defined <span class="o">(</span>Unit_name<span class="o">)</span>
+45 876 469 501 681 966 606 500 505 917 974 278
+278 134
+30 89 629 63 662 549 902 171 509 314 370 622 287 508
+904 960 320 971 431 402 436 155
+610 425 643 826 670 136 877 558 789 66 681 315 4
+29 888 577 658 499 191 348 959 539 740 712 152 704 460 449 727
+889 811 54 456 168 891 196 561 467 544 254 942 911 256 663 578 517 845
+159 167 671 342 887 546 605 607 354 881 361 545 865 588 312
+649 123
+750 729 474 863 43 482
+
+<span class="nv">$ </span>./getFirstElement <span class="nt">--fuzz</span> <span class="nt">--timeout</span><span class="o">=</span>1 <span class="nt">--seed</span><span class="o">=</span>1 | <span class="nb">head
+</span>INFO: Starting fuzzing
+WARNING: No <span class="nb">test </span>specified, defaulting to first <span class="nb">test </span>defined <span class="o">(</span>Unit_name<span class="o">)</span>
+45 876 469 501 681 966 606 500 505 917 974 278
+278 134
+30 89 629 63 662 549 902 171 509 314 370 622 287 508
+904 960 320 971 431 402 436 155
+610 425 643 826 670 136 877 558 789 66 681 315 4
+29 888 577 658 499 191 348 959 539 740 712 152 704 460 449 727
+889 811 54 456 168 891 196 561 467 544 254 942 911 256 663 578 517 845
+159 167 671 342 887 546 605 607 354 881 361 545 865 588 312
+649 123
+750 729 474 863 43 482
+</code></pre></div></div>
+
+<p>This problem is resolved in the <a href="https://github.com/FabrizioSandri/RcppDeepState/pull/5">pull request #5</a>.</p>
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="FabrizioSandri/gsoc-2022-blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/gsoc-2022-blog/deepstate/rcpp/c++/r/2022/06/21/deterministic-fuzz-testing.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/gsoc-2022-blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/gsoc-2022-blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/gsoc-2022-blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Blog for the GSOC 2022 edition | RcppDeepState</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/FabrizioSandri" target="_blank" title="FabrizioSandri"><svg class="svg-icon grey"><use xlink:href="/gsoc-2022-blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
