@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: An advanced fuzz testing description using DeepState in conjunction with Valgrind
 badges: true
-categories: [deepstate, fuzz, c++, valgrind]
+categories: [DeepState, fuzz, c++, valgrind]
 comments: true
 title: Advanced fuzz testing with DeepState and Valgrind
 ---

@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: A quick introduction to DeepState fuzzing library 
 badges: true
-categories: [deepstate, fuzz, c++]
+categories: [DeepState, fuzz, c++]
 comments: true
 title: DeepState introduction
 ---

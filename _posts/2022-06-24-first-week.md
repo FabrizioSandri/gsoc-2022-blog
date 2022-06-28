@@ -5,7 +5,7 @@ description: Pull requests and changes made in the Community Bonding Period and 
 badges: true
 categories: [summary]
 comments: true
-title: First changes to RcppDeepState
+title: ▸ First changes to RcppDeepState
 ---
 
 ## Introduction
