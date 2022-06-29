@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>RcppDeepState’s GitHub Action considerations | GSOC 2022</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="RcppDeepState’s GitHub Action considerations" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An introduction to GitHub Actions and some consideration before writing the GitHub Action for RcppDeepState" />
+<meta property="og:description" content="An introduction to GitHub Actions and some consideration before writing the GitHub Action for RcppDeepState" />
+<link rel="canonical" href="https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/06/28/github-actions.html" />
+<meta property="og:url" content="https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/06/28/github-actions.html" />
+<meta property="og:site_name" content="GSOC 2022" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-06-28T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="RcppDeepState’s GitHub Action considerations" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-06-28T00:00:00-05:00","datePublished":"2022-06-28T00:00:00-05:00","description":"An introduction to GitHub Actions and some consideration before writing the GitHub Action for RcppDeepState","headline":"RcppDeepState’s GitHub Action considerations","mainEntityOfPage":{"@type":"WebPage","@id":"https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/06/28/github-actions.html"},"url":"https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/06/28/github-actions.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/gsoc-2022-blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://fabriziosandri.github.io/gsoc-2022-blog/feed.xml" title="GSOC 2022" /><link rel="shortcut icon" type="image/x-icon" href="/gsoc-2022-blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/gsoc-2022-blog/">GSOC 2022</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/gsoc-2022-blog/search/">Search</a><a class="page-link" href="/gsoc-2022-blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">RcppDeepState&#39;s GitHub Action considerations</h1><p class="page-description">An introduction to GitHub Actions and some consideration before writing the GitHub Action for RcppDeepState</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-06-28T00:00:00-05:00" itemprop="datePublished">
+        Jun 28, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/gsoc-2022-blog/categories/#GitHub Action">GitHub Action</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#github-actions">GitHub Actions</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#github-actions-and-rcppdeepstate">Github Actions and RcppDeepState</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#considerations">Considerations</a></li>
+<li class="toc-entry toc-h4"><a href="#development">Development</a></li>
+</ul>
+</li>
+</ul><h2 id="introduction">
+<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+<p>Continuous integration and Continuous delivery, also called CI/CD, are two useful methodologies that every developer have hear about. 
+This terms refers to the possibility of continuously perform some task with your code in an automated way.</p>
+
+<p>Continuous integration, often, relies on executing automatic testing to check that an application is correctly behaving. On the other hand, continuous delivery refers to the process of automatically move the code from a testing environment to a production environment.</p>
+
+<p>These two methodologies, can be implemented in any Git repository using tools such as GitHub Actions and TravisCI. I will focus only on GitHub Actions, which is a feature implemented by the GitHub platform, which allows to create complex workflows in any kind of repository.</p>
+
+<h4 id="github-actions">
+<a class="anchor" href="#github-actions" aria-hidden="true"><span class="octicon octicon-link"></span></a>GitHub Actions</h4>
+<p>GitHub actions are fully integrated with GitHub and can respond to any specified GitHub event (new issue, pull request, push on a branch). This is a fully automated engine and GitHub Actions comes with a lot of pre-defined workflows that are provided by communities. A powerful functionality provided by GitHub actions is the possibility to run the code on different operating systems, such as Linux, Windows, macOS and Docker containers.</p>
+
+<p>GitHub Actions are composed of three components: an event, a workflow and an action. Everything start with an event that triggers the execution of a workflow, which is composed of different jobs to compute some operations. Actions instead are reusable units of code that are called within a workflow with the <code class="language-plaintext highlighter-rouge">with</code> parameter.</p>
+
+<h2 id="github-actions-and-rcppdeepstate">
+<a class="anchor" href="#github-actions-and-rcppdeepstate" aria-hidden="true"><span class="octicon octicon-link"></span></a>Github Actions and RcppDeepState</h2>
+<p>In the previous posts, I demonstrated the efficacy of RcppDeepState in detecting issues in Rcpp-based libraries. Based on this, in order to make it easier for developers to execute RcppDeepState on any R package hosted in a GitHub repository, it will be useful to integrate RcppDeepState inside a GitHub Action.
+This is exactly the main goal of my Google Summer Of Code project, but before getting started on the development of the GitHub Action, there are a few things to take into account.</p>
+
+<h4 id="considerations">
+<a class="anchor" href="#considerations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Considerations</h4>
+<p>Here is a list of considerations that will help me during the development of the RcppDeepState GitHub Action.</p>
+<ol>
+  <li>The first thing I need to take into account is the choice of the architecture for the GitHub Action. According to the GitHub documentation<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> there are three ways to create an Action:
+    <ul>
+      <li>Docker container Action</li>
+      <li>Javascript Action</li>
+      <li>Composite Action</li>
+    </ul>
+  </li>
+  <li>While developing the Action I need to consider that all the optimization parameters must be disabled in order to get the best performance of RcppDeepState. The motivation behind this choice is explained in the <a href="https://github.com/FabrizioSandri/RcppDeepState/issues/8">Issue #8</a>.</li>
+  <li>Define the inputs and the outputs of the Action.</li>
+  <li>The Action will likely be published on the GitHub Marketplace in the future so that developers can easily find it on the GitHub platform. As a result, I decided it would be better to build it in a different repository. This will, as stated in the documentation<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, decouple the versioning of the action from the versioning of the RcppDeepState application code.
+    <blockquote>
+      <p>If you’re developing an action for other people to use, we recommend keeping the action in its own repository instead of bundling it with other application code. This allows you to version, track, and release the action just like any other software.</p>
+
+      <p>Storing an action in its own repository makes it easier for the GitHub community to discover the action, narrows the scope of the code base for developers fixing issues and extending the action, and decouples the action’s versioning from the versioning of other application code.</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h4 id="development">
+<a class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h4>
+<p>As mentioned in the Considerations section, this GitHub Action will be entirely developed in a separate repository that can be found at the following link: <a href="https://github.com/FabrizioSandri/RcppDeepState-action">RcppDeepState-action</a>.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><a href="https://docs.github.com/en/actions/creating-actions">GitHub documentation: Creating actions</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p><a href="https://docs.github.com/en/actions/creating-actions/about-custom-actions#choosing-a-location-for-your-action">GitHub documentation: Choosing a location for your action</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+  </ol>
+</div>
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="FabrizioSandri/gsoc-2022-blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/gsoc-2022-blog/github%20action/2022/06/28/github-actions.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/gsoc-2022-blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/gsoc-2022-blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/gsoc-2022-blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Blog for the GSOC 2022 edition | RcppDeepState</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/FabrizioSandri" target="_blank" title="FabrizioSandri"><svg class="svg-icon grey"><use xlink:href="/gsoc-2022-blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
