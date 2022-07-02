@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: An quick overview of package fuzz testing using RcppDeepState 
 badges: true
-categories: [RcppDeepState, fuzz, R, c++]
+categories: [RcppDeepState]
 comments: true
 title: Rcpp package fuzz testing with RcppDeepState
 ---

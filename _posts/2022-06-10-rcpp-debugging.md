@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: A detailed description of debugging Rcpp functions outside of the R environment using Valgrind
 badges: true
-categories: [Rcpp, debug, R, c++, valgrind]
+categories: [Rcpp, Valgrind]
 comments: true
 title: Debugging Rcpp outside of R
 ---

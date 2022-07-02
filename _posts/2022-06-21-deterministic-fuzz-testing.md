@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: Make DeepState fuzz testing with Rcpp, deterministic. Solution implemented in the pull request \#6
 badges: true
-categories: [DeepState, Rcpp, c++, R]
+categories: [DeepState, Rcpp]
 comments: true
 title: Deterministic fuzz testing with DeepState and Rcpp
 ---

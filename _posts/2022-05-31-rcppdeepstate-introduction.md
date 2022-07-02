@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: An introduction to Rcpp fuzz testing using RcppDeepState auxiliary functions
 badges: true
-categories: [RcppDeepState, fuzz, R]
+categories: [RcppDeepState]
 comments: true
 title: Introduction to RcppDeepState
 ---

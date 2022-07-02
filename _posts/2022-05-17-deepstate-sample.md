@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: A minimal example of using deepstate to perform fuzz testing on a C++ function
 badges: true
-categories: [DeepState, fuzz, c++]
+categories: [DeepState]
 comments: true
 title: Sample DeepState fuzz test
 ---
