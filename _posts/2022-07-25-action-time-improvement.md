@@ -46,6 +46,7 @@ ENTRYPOINT ["/entrypoint.sh"]
 The new composite step will make use of the prebuilt image made available on Docker Hub. The dependencies are all installed in this image, so setting them up won't take any time; the only overhead will be caused by downloading the prebuilt action. This is the `action.yml` before the change.
 
 ```yaml
+...
 runs:
   using: "composite"
   steps:
@@ -63,6 +64,7 @@ runs:
         seed: ${{ inputs.seed }}
         time_limit: ${{ inputs.time_limit }}
         max_inputs: ${{ inputs.max_inputs }}
+...
 ```
 
 After the change, it will look like this:
