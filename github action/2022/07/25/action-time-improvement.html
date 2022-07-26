@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>GitHub action’s execution time | GSOC 2022</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="GitHub action’s execution time" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Description of the steps that I will follow this week to improve the GitHub action’s execution time" />
+<meta property="og:description" content="Description of the steps that I will follow this week to improve the GitHub action’s execution time" />
+<link rel="canonical" href="https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/07/25/action-time-improvement.html" />
+<meta property="og:url" content="https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/07/25/action-time-improvement.html" />
+<meta property="og:site_name" content="GSOC 2022" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-25T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="GitHub action’s execution time" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-07-25T00:00:00-05:00","datePublished":"2022-07-25T00:00:00-05:00","description":"Description of the steps that I will follow this week to improve the GitHub action’s execution time","headline":"GitHub action’s execution time","mainEntityOfPage":{"@type":"WebPage","@id":"https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/07/25/action-time-improvement.html"},"url":"https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/07/25/action-time-improvement.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/gsoc-2022-blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://fabriziosandri.github.io/gsoc-2022-blog/feed.xml" title="GSOC 2022" /><link rel="shortcut icon" type="image/x-icon" href="/gsoc-2022-blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/gsoc-2022-blog/">GSOC 2022</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/gsoc-2022-blog/search/">Search</a><a class="page-link" href="/gsoc-2022-blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">GitHub action&#39;s execution time</h1><p class="page-description">Description of the steps that I will follow this week to improve the GitHub action's execution time</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-25T00:00:00-05:00" itemprop="datePublished">
+        Jul 25, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/gsoc-2022-blog/categories/#GitHub Action">GitHub Action</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
+<li class="toc-entry toc-h2"><a href="#considerations">Considerations</a></li>
+<li class="toc-entry toc-h2"><a href="#switch-to-a-prebuilt-docker-image">Switch to a prebuilt docker image</a></li>
+<li class="toc-entry toc-h2"><a href="#continuous-deploy-of-the-docker-image">Continuous deploy of the Docker image</a></li>
+</ul><h2 id="introduction">
+<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+<p>In the previous week I successfully integrated the original Docker action with a composite one. The main result of this update is a more flexible action that makes possible to publish the analysis results on Github; this is possible by publishing an artifact file containing the inputs and adding comments to pull requests. In the past working week (Week 7) I discussed with my mentor Randy about this change and he suggested me to prebuild the entire action and upload it to Docker Hub, which is a service provided by Docker for sharing container images<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. In this blog post I describe the process that will be followed this week, in order to prebuild the Docker image and publish it to Docker Hub.</p>
+
+<h2 id="considerations">
+<a class="anchor" href="#considerations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Considerations</h2>
+<p>The actual execution time of the Action is about 15-30 minutes. A huge amount of this time is spent installing all the missing dependencies, which includes the R package, devtools, and so on. Installing each of these every time the action is triggered is useless. A better approach instead would be to prebuild the docker container and save the image so that it can be reused each time the action will be run. This can be accomplished by publishing the image on Docker Hub. What I expect from this improvement is a reduction of the amount of time spent installing the dependencies.</p>
+
+<p>One last thing to think about is moving the devtools installation command from the <code class="language-plaintext highlighter-rouge">entrypoint.sh</code> file to the Dockerfile so that it will be installed when the container is built.</p>
+
+<h2 id="switch-to-a-prebuilt-docker-image">
+<a class="anchor" href="#switch-to-a-prebuilt-docker-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Switch to a prebuilt docker image</h2>
+<p>The main idea is to replace the actual Action’s Dockerfile with a simple composite step that runs the image from Docker Hub.</p>
+
+<p>In the actual implementation, every time the Action is triggered, a container is built in accordance with the Dockerfile, downloading each dependency one at a time, as you can see in the Dockerfile of the following sample.</p>
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> ubuntu:latest</span>
+
+<span class="c"># setup zoneinfo</span>
+<span class="k">RUN </span><span class="nb">ln</span> <span class="nt">-snf</span> /usr/share/zoneinfo/<span class="nv">$INPUT_ZONEINFO</span> /etc/localtime <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$INPUT_ZONEINFO</span> <span class="o">&gt;</span> /etc/timezone
+
+<span class="c">### Dependencies installation</span>
+<span class="k">RUN </span>apt update
+<span class="k">RUN </span>apt <span class="nb">install</span> <span class="nt">-y</span> build-essential gcc-multilib g++-multilib cmake <span class="se">\
+</span>                   python3-setuptools python3-dev libffi-dev clang valgrind <span class="se">\
+</span>                   libcurl4-gnutls-dev libxml2-dev libssl-dev wget <span class="se">\
+</span>                   libfontconfig1-dev libharfbuzz-dev libfribidi-dev <span class="se">\
+</span>                   libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev r-base
+
+<span class="c"># Copy the files to the root filesystem of the container</span>
+<span class="k">COPY</span><span class="s"> src/entrypoint.sh /entrypoint.sh</span>
+<span class="k">COPY</span><span class="s"> src/analyze_package.R /analyze_package.R</span>
+<span class="k">RUN </span><span class="nb">chmod</span> +x /entrypoint.sh
+
+<span class="c"># Executes `entrypoint.sh` when the Docker container starts up</span>
+<span class="k">ENTRYPOINT</span><span class="s"> ["/entrypoint.sh"]</span>
+</code></pre></div></div>
+
+<p>The new composite step will make use of the prebuilt image made available on Docker Hub. The dependencies are all installed in this image, so setting them up won’t take any time; the only overhead will be caused by downloading the prebuilt action. This is the <code class="language-plaintext highlighter-rouge">action.yml</code> before the change.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">runs</span><span class="pi">:</span>
+  <span class="na">using</span><span class="pi">:</span> <span class="s2">"</span><span class="s">composite"</span>
+  <span class="na">steps</span><span class="pi">:</span>
+
+    <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span> 
+      <span class="na">with</span><span class="pi">:</span>
+        <span class="na">repository</span><span class="pi">:</span> <span class="s">FabrizioSandri/RcppDeepState-action</span>
+        <span class="na">path</span><span class="pi">:</span> <span class="s">RcppDeepState-action</span>
+
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Analyze the package with RcppDeepState</span> 
+      <span class="na">uses</span><span class="pi">:</span> <span class="s">./RcppDeepState-action/docker</span>
+      <span class="na">with</span><span class="pi">:</span>
+        <span class="na">fail_ci_if_error</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">location</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">seed</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">time_limit</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">max_inputs</span><span class="pi">:</span> <span class="s">$</span>
+</code></pre></div></div>
+
+<p>After the change, it will look like this:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">...</span>
+<span class="na">runs</span><span class="pi">:</span>
+  <span class="na">using</span><span class="pi">:</span> <span class="s2">"</span><span class="s">composite"</span>
+  <span class="na">steps</span><span class="pi">:</span>
+
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Analyze the package with RcppDeepState</span> 
+      <span class="na">uses</span><span class="pi">:</span> <span class="s">docker://fabriziosandri/rcppdeepstate:latest</span>
+      <span class="na">with</span><span class="pi">:</span>
+        <span class="na">fail_ci_if_error</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">location</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">seed</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">time_limit</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">max_inputs</span><span class="pi">:</span> <span class="s">$</span>
+<span class="nn">...</span>
+</code></pre></div></div>
+<p>As you can see the <code class="language-plaintext highlighter-rouge">checkout</code> step has been removed, in fact there’s no need to download the Dockerfile and the related files(<code class="language-plaintext highlighter-rouge">/docker</code> folder). This solves the problem of specifying the branch name in the checkout step mentioned by Randy in the pull request #4<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">2</a></sup>. However this introduces a new problem: I have to decide which event should trigger the update of the image on Docker Hub. A possible solution for this problem is to update the image every time a new commit on the master branch occurs. The problem with this solution is that, if I make a pull request and want to test some new updates made on the docker image, I have to push the result on the master branch to trigger the update on Docker Hub.</p>
+
+<h2 id="continuous-deploy-of-the-docker-image">
+<a class="anchor" href="#continuous-deploy-of-the-docker-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Continuous deploy of the Docker image</h2>
+<p>Each change to the Docker architecture must be reflected to the image published on Docker Hub. In order to make this process automatic and avoid to manually push the docker image to Docker Hub, as suggested by Randy, there is an existing GitHub Action that automatically builds and publishes Docker images to Docker Hub<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">3</a></sup>. This action can be integrated in the RcppDeepState-action repository inside a workflow’s job that is triggered every time a commit on the master branch occurs.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">docker</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Checkout</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up Docker Buildx</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/setup-buildx-action@v2</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Login to DockerHub</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/login-action@v2</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">username</span><span class="pi">:</span> <span class="s">$</span>
+          <span class="na">password</span><span class="pi">:</span> <span class="s">$</span>
+    
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build and push</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/build-push-action@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">context</span><span class="pi">:</span> <span class="s">./docker</span>
+          <span class="na">push</span><span class="pi">:</span> <span class="no">true</span>
+          <span class="na">tags</span><span class="pi">:</span> <span class="s">fabriziosandri/rcppdeepstate:latest</span>
+</code></pre></div></div>
+
+<p>A token must be generated in order to publish the image to Docker Hub and authenticate the user before pushing the image on it. This token can be simply generated by going in Profile Settings &gt; Security &gt; Access Tokens &gt; New Access Token. A pop up will appear, asking for the permissions that will be assigned to this token; the value “Read, Write, Delete” is sufficient.</p>
+
+<p>In order to prevent information theft, the token and the username should be kept as a repository secret. In the example above, the variables for the username and token are referred to as <code class="language-plaintext highlighter-rouge">DOCKERHUB_USERNAME</code> and <code class="language-plaintext highlighter-rouge">DOCKERHUB_TOKEN</code> respectively. These parameters have been set in the Security &gt; Secrets &gt; Actions menu on the Settings tab of the repository.
+Once they are defined, they can be used in the following way<code class="language-plaintext highlighter-rouge"> $</code>.</p>
+
+<hr>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><a href="https://hub.docker.com/">Docker Hub</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p><a href="https://github.com/FabrizioSandri/RcppDeepState-action/pull/4#issuecomment-1183670955">Composite action #4</a> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p><a href="https://github.com/marketplace/actions/build-and-push-docker-images">GitHub Action - Build and push Docker images</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+  </ol>
+</div>
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="FabrizioSandri/gsoc-2022-blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/gsoc-2022-blog/github%20action/2022/07/25/action-time-improvement.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/gsoc-2022-blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/gsoc-2022-blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/gsoc-2022-blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Blog for the GSOC 2022 edition | RcppDeepState</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/FabrizioSandri" target="_blank" title="FabrizioSandri"><svg class="svg-icon grey"><use xlink:href="/gsoc-2022-blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
