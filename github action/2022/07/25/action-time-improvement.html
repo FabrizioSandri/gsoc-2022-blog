@@ -139,7 +139,8 @@ window.onload = wrap_img;
 
 <p>The new composite step will make use of the prebuilt image made available on Docker Hub. The dependencies are all installed in this image, so setting them up won’t take any time; the only overhead will be caused by downloading the prebuilt action. This is the <code class="language-plaintext highlighter-rouge">action.yml</code> before the change.</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">runs</span><span class="pi">:</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">...</span>
+<span class="na">runs</span><span class="pi">:</span>
   <span class="na">using</span><span class="pi">:</span> <span class="s2">"</span><span class="s">composite"</span>
   <span class="na">steps</span><span class="pi">:</span>
 
@@ -156,6 +157,7 @@ window.onload = wrap_img;
         <span class="na">seed</span><span class="pi">:</span> <span class="s">$</span>
         <span class="na">time_limit</span><span class="pi">:</span> <span class="s">$</span>
         <span class="na">max_inputs</span><span class="pi">:</span> <span class="s">$</span>
+<span class="nn">...</span>
 </code></pre></div></div>
 
 <p>After the change, it will look like this:</p>
