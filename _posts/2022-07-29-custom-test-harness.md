@@ -5,7 +5,7 @@ description: Guide to write a custom test harness for a function that cannot be 
 badges: true
 categories: [RcppDeepState]
 comments: true
-title: Custom test harness for function with unsupported datatypes
+title: Write a custom test harness for functions with unsupported datatypes
 ---
 
 
