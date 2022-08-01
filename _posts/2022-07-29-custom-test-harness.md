@@ -39,10 +39,8 @@ The generator step cannot be used for a function whose inputs are not supported,
 
 Given the path of the package being analyzed `package_location` and the name of the function which datatypes fall out of the supported ones `function_name`, this script can be used to generate the directory structure for the custom test harness:
 ```R
-fun_path <- file.path(package_location, "/inst/testfiles/", function_name)
-inputs_path <- file.path(fun_path, "/inputs")
-dir.create(fun_path, showWarnings = FALSE)
-dir.create(inputs_path, showWarnings = FALSE)
+inputs_path <- file.path(package_location, "inst", "testfiles", function_name, "inputs")
+dir.create(inputs_path, showWarnings = FALSE, recursive=TRUE)
 
 deepstate_create_makefile(package_location, function_name)
 ```
@@ -115,11 +113,8 @@ To solve this I followed all the steps mentioned above. First of all I ran the s
 package_location <- "/home/fabri/test/testHarness/RcppDeepState/inst/testpkgs/testSAN"
 function_name <- "unsupported_datatype"
 
-
-fun_path <- file.path(package_location, "/inst/testfiles/", function_name)
-inputs_path <- file.path(fun_path, "/inputs")
-dir.create(fun_path, showWarnings = FALSE)
-dir.create(inputs_path, showWarnings = FALSE)
+inputs_path <- file.path(package_location, "inst", "testfiles", function_name, "inputs")
+dir.create(inputs_path, showWarnings = FALSE, recursive=TRUE)
 
 deepstate_create_makefile(package_location, function_name)
 ```
