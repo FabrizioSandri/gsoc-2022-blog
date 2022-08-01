@@ -78,7 +78,6 @@ TEST(<package_name>, runner){
   * above 
   */
 
-
   /** INPUTS DUMP
   * for each input defined above you have to save it in the 'inputs' directory
   * created before using the function qs::c_qsave(param, "./inputs/arg_name.qs", 
@@ -167,7 +166,7 @@ TEST(testSAN, runner){
 
   /** INPUTS DUMP */
   qs::c_qsave(param, "./inputs/param.qs", "high", "zstd", 1, 15, true, 1);
-  
+
   try{
     /** FUNCTION INVOCATION */
     unsupported_datatype(param);
