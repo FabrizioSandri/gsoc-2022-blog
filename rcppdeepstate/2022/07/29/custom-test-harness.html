@@ -165,6 +165,14 @@ I’ll explain this procedure in this blog article.</p>
   * Example: initialize a random integer parameter 'arg1':
   * int arg1 = DeepState_Int();
   */</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="o">&lt;</span><span class="n">package_name</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">runner</span><span class="p">){</span>
+  <span class="cm">/** PARAMETERS
+  * here you simply have to copy and paste the same PARAMETERS section defined
+  * above 
+  */</span>
+
 
   <span class="cm">/** INPUTS DUMP
   * for each input defined above you have to save it in the 'inputs' directory
@@ -174,13 +182,6 @@ I’ll explain this procedure in this blog article.</p>
   * 
   * Example: save the 'arg1' input defined before:
   * qs::c_qsave(arg1, "./inputs/arg1.qs", "high", "zstd", 1, 15, true, 1)
-  */</span>
-<span class="p">}</span>
-
-<span class="n">TEST</span><span class="p">(</span><span class="o">&lt;</span><span class="n">package_name</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">runner</span><span class="p">){</span>
-  <span class="cm">/** PARAMETERS
-  * here you simply have to copy and paste the same PARAMETERS section defined
-  * above (without the qs::c_qsave lines)
   */</span>
 
   <span class="k">try</span><span class="p">{</span>
@@ -250,14 +251,15 @@ I’ll explain this procedure in this blog article.</p>
 <span class="n">TEST</span><span class="p">(</span><span class="n">testSAN</span><span class="p">,</span> <span class="n">generator</span><span class="p">){</span>
   <span class="cm">/** PARAMETERS */</span>  
   <span class="n">LogicalVector</span> <span class="n">param</span> <span class="o">=</span> <span class="n">RcppDeepState_LogicalVector</span><span class="p">();</span>
-
-  <span class="cm">/** INPUTS DUMP */</span>
-  <span class="n">qs</span><span class="o">::</span><span class="n">c_qsave</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="s">"./inputs/param.qs"</span><span class="p">,</span> <span class="s">"high"</span><span class="p">,</span> <span class="s">"zstd"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="n">TEST</span><span class="p">(</span><span class="n">testSAN</span><span class="p">,</span> <span class="n">runner</span><span class="p">){</span>
   <span class="cm">/** PARAMETERS */</span>
   <span class="n">LogicalVector</span> <span class="n">param</span> <span class="o">=</span> <span class="n">RcppDeepState_LogicalVector</span><span class="p">();</span>
+
+  <span class="cm">/** INPUTS DUMP */</span>
+  <span class="n">qs</span><span class="o">::</span><span class="n">c_qsave</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="s">"./inputs/param.qs"</span><span class="p">,</span> <span class="s">"high"</span><span class="p">,</span> <span class="s">"zstd"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+  
   <span class="k">try</span><span class="p">{</span>
     <span class="cm">/** FUNCTION INVOCATION */</span>
     <span class="n">unsupported_datatype</span><span class="p">(</span><span class="n">param</span><span class="p">);</span>
