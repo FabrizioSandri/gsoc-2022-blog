@@ -70,6 +70,14 @@ TEST(<package_name>, generator){
   * Example: initialize a random integer parameter 'arg1':
   * int arg1 = DeepState_Int();
   */
+}
+
+TEST(<package_name>, runner){
+  /** PARAMETERS
+  * here you simply have to copy and paste the same PARAMETERS section defined
+  * above 
+  */
+
 
   /** INPUTS DUMP
   * for each input defined above you have to save it in the 'inputs' directory
@@ -79,13 +87,6 @@ TEST(<package_name>, generator){
   * 
   * Example: save the 'arg1' input defined before:
   * qs::c_qsave(arg1, "./inputs/arg1.qs", "high", "zstd", 1, 15, true, 1)
-  */
-}
-
-TEST(<package_name>, runner){
-  /** PARAMETERS
-  * here you simply have to copy and paste the same PARAMETERS section defined
-  * above (without the qs::c_qsave lines)
   */
 
   try{
@@ -158,14 +159,15 @@ Rcpp::LogicalVector RcppDeepState_LogicalVector(){
 TEST(testSAN, generator){
   /** PARAMETERS */  
   LogicalVector param = RcppDeepState_LogicalVector();
-
-  /** INPUTS DUMP */
-  qs::c_qsave(param, "./inputs/param.qs", "high", "zstd", 1, 15, true, 1);
 }
 
 TEST(testSAN, runner){
   /** PARAMETERS */
   LogicalVector param = RcppDeepState_LogicalVector();
+
+  /** INPUTS DUMP */
+  qs::c_qsave(param, "./inputs/param.qs", "high", "zstd", 1, 15, true, 1);
+  
   try{
     /** FUNCTION INVOCATION */
     unsupported_datatype(param);
