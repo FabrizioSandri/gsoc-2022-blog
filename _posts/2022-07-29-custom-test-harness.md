@@ -37,11 +37,8 @@ RcppDeepState involves two steps:
 
 The generator step cannot be used for a function whose inputs are not supported, so we must manually run the steps to construct the directory structure for this function. This can be done using the existing RcppDeepState functions. 
 
-Given the path of the package being analyzed `package_location` and the name of the function which datatypes fall out of the supported ones `function_name`, this script can be used to generate the directory structure for the custom test harness:
+Given the path of the package being analyzed `package_location` and the name of the function which datatypes fall out of the supported ones `function_name`, the `deepstate_create_makefile` function can be used to generate the directory structure for the custom test harness:
 ```R
-inputs_path <- file.path(package_location, "inst", "testfiles", function_name, "inputs")
-dir.create(inputs_path, showWarnings = FALSE, recursive=TRUE)
-
 deepstate_create_makefile(package_location, function_name)
 ```
 
@@ -108,13 +105,10 @@ result <- deepstate_harness_analyze_pkg(package_location)
 ## Example
 I want to provide an example of the `unsupported_datatype` function that can be found in the testSAN package[^2]. This function uses a `LogicalVector` as its single parameter, thus RcppDeepState will skip this function from the analysis.
 
-To solve this I followed all the steps mentioned above. First of all I ran the script, remembering that I had to define the missing variables(`package_location` and `function_name`):
+To solve this I followed all the steps mentioned above. First of all I ran the `deepstate_create_makefile` function, remembering that I had to define the missing variables(`package_location` and `function_name`):
 ```R
 package_location <- "/home/fabri/test/testHarness/RcppDeepState/inst/testpkgs/testSAN"
 function_name <- "unsupported_datatype"
-
-inputs_path <- file.path(package_location, "inst", "testfiles", function_name, "inputs")
-dir.create(inputs_path, showWarnings = FALSE, recursive=TRUE)
 
 deepstate_create_makefile(package_location, function_name)
 ```
