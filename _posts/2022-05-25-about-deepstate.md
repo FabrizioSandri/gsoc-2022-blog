@@ -4,7 +4,7 @@ layout: post
 description: A quick introduction to DeepState fuzzing library 
 badges: true
 categories: [DeepState]
-comments: true
+comments: false
 title: DeepState introduction
 ---
 

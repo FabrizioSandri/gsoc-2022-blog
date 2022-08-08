@@ -4,7 +4,7 @@ layout: post
 description: A minimal example of using deepstate to perform fuzz testing on a C++ function
 badges: true
 categories: [DeepState]
-comments: true
+comments: false
 title: Sample DeepState fuzz test
 ---
 

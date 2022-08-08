@@ -4,7 +4,7 @@ layout: post
 description: An introduction to GitHub Actions and some consideration before writing the GitHub Action for RcppDeepState
 badges: true
 categories: [GitHub Action]
-comments: true
+comments: false
 title: RcppDeepState's GitHub Action considerations 
 ---
 

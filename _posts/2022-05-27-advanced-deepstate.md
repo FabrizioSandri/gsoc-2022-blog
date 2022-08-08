@@ -4,7 +4,7 @@ layout: post
 description: An advanced fuzz testing description using DeepState in conjunction with Valgrind
 badges: true
 categories: [DeepState, Valgrind]
-comments: true
+comments: false
 title: Advanced fuzz testing with DeepState and Valgrind
 ---
 

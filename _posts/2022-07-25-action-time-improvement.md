@@ -4,7 +4,7 @@ layout: post
 description: Description of the steps that I will follow this week to improve the GitHub action's execution time
 badges: true
 categories: [GitHub Action]
-comments: true
+comments: false
 title: GitHub action's execution time
 ---
 

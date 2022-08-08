@@ -4,7 +4,7 @@ layout: post
 description: Pull requests and changes made in the Community Bonding Period and in the first week
 badges: true
 categories: [Summary]
-comments: true
+comments: false
 title: ▸ Week 4 & Community Bonding Period - First changes to RcppDeepState
 ---
 

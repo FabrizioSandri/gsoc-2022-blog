@@ -4,7 +4,7 @@ layout: post
 description: Considerations review
 badges: true
 categories: [GitHub Action]
-comments: true
+comments: false
 title: Moving to a composite GitHub Action
 ---
 
