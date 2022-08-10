@@ -57,21 +57,22 @@ RInside Rinstance;
 * signature of the function being analyzed must be added here 
 */
 
+/** INPUTS
+* here you can define all the inputs for your function, and initialize them
+* with a random value generator. Define your inputs inside the `#define INPUTS` 
+* macro.
+* 
+* Example: initialize a random integer parameter 'arg1':
+* #define INPUTS \
+*   int arg1 = DeepState_Int();
+*/
+
 TEST(<package_name>, generator){
-  /** PARAMETERS
-  * here you can define all the inputs for your function, and initialize them
-  * with a random value generator. 
-  * 
-  * Example: initialize a random integer parameter 'arg1':
-  * int arg1 = DeepState_Int();
-  */
+  INPUTS
 }
 
 TEST(<package_name>, runner){
-  /** PARAMETERS
-  * here you simply have to copy and paste the same PARAMETERS section defined
-  * above 
-  */
+  INPUTS
 
   /** INPUTS DUMP
   * for each input defined above you have to save it in the 'inputs' directory
@@ -134,24 +135,26 @@ RInside Rinstance;
 /** FUNCTION SIGNATURE */
 int unsupported_datatype(Rcpp::LogicalVector param);
 
+/** INPUTS */ 
+#define INPUTS \
+  LogicalVector param = RcppDeepState_LogicalVector();
+
 Rcpp::LogicalVector RcppDeepState_LogicalVector(){
   int rand_size = DeepState_IntInRange(1,20);
   Rcpp::LogicalVector rand_vec(rand_size);
-    for(int i = 0 ; i < rand_size;i++){      
-      rand_vec[i] = DeepState_IntInRange(0,1);  
-    }
+  for(int i = 0 ; i < rand_size;i++){      
+    rand_vec[i] = DeepState_IntInRange(0,1);  
+  }
 
   return rand_vec;
 }
 
 TEST(testSAN, generator){
-  /** PARAMETERS */  
-  LogicalVector param = RcppDeepState_LogicalVector();
+  INPUTS  
 }
 
 TEST(testSAN, runner){
-  /** PARAMETERS */
-  LogicalVector param = RcppDeepState_LogicalVector();
+  INPUTS
 
   /** INPUTS DUMP */
   qs::c_qsave(param, "./inputs/param.qs", "high", "zstd", 1, 15, true, 1);
