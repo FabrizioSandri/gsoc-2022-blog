@@ -152,21 +152,22 @@ I’ll explain this procedure in this blog article.</p>
 * signature of the function being analyzed must be added here 
 */</span>
 
+<span class="cm">/** INPUTS
+* here you can define all the inputs for your function, and initialize them
+* with a random value generator. Define your inputs inside the `#define INPUTS` 
+* macro.
+* 
+* Example: initialize a random integer parameter 'arg1':
+* #define INPUTS \
+*   int arg1 = DeepState_Int();
+*/</span>
+
 <span class="n">TEST</span><span class="p">(</span><span class="o">&lt;</span><span class="n">package_name</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">generator</span><span class="p">){</span>
-  <span class="cm">/** PARAMETERS
-  * here you can define all the inputs for your function, and initialize them
-  * with a random value generator. 
-  * 
-  * Example: initialize a random integer parameter 'arg1':
-  * int arg1 = DeepState_Int();
-  */</span>
+  <span class="n">INPUTS</span>
 <span class="p">}</span>
 
 <span class="n">TEST</span><span class="p">(</span><span class="o">&lt;</span><span class="n">package_name</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">runner</span><span class="p">){</span>
-  <span class="cm">/** PARAMETERS
-  * here you simply have to copy and paste the same PARAMETERS section defined
-  * above 
-  */</span>
+  <span class="n">INPUTS</span>
 
   <span class="cm">/** INPUTS DUMP
   * for each input defined above you have to save it in the 'inputs' directory
@@ -226,24 +227,26 @@ I’ll explain this procedure in this blog article.</p>
 <span class="cm">/** FUNCTION SIGNATURE */</span>
 <span class="kt">int</span> <span class="nf">unsupported_datatype</span><span class="p">(</span><span class="n">Rcpp</span><span class="o">::</span><span class="n">LogicalVector</span> <span class="n">param</span><span class="p">);</span>
 
+<span class="cm">/** INPUTS */</span> 
+<span class="cp">#define INPUTS \
+  LogicalVector param = RcppDeepState_LogicalVector();
+</span>
 <span class="n">Rcpp</span><span class="o">::</span><span class="n">LogicalVector</span> <span class="nf">RcppDeepState_LogicalVector</span><span class="p">(){</span>
   <span class="kt">int</span> <span class="n">rand_size</span> <span class="o">=</span> <span class="n">DeepState_IntInRange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">);</span>
   <span class="n">Rcpp</span><span class="o">::</span><span class="n">LogicalVector</span> <span class="n">rand_vec</span><span class="p">(</span><span class="n">rand_size</span><span class="p">);</span>
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">rand_size</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>      
-      <span class="n">rand_vec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">DeepState_IntInRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>  
-    <span class="p">}</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">rand_size</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>      
+    <span class="n">rand_vec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">DeepState_IntInRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>  
+  <span class="p">}</span>
 
   <span class="k">return</span> <span class="n">rand_vec</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="n">TEST</span><span class="p">(</span><span class="n">testSAN</span><span class="p">,</span> <span class="n">generator</span><span class="p">){</span>
-  <span class="cm">/** PARAMETERS */</span>  
-  <span class="n">LogicalVector</span> <span class="n">param</span> <span class="o">=</span> <span class="n">RcppDeepState_LogicalVector</span><span class="p">();</span>
+  <span class="n">INPUTS</span>  
 <span class="p">}</span>
 
 <span class="n">TEST</span><span class="p">(</span><span class="n">testSAN</span><span class="p">,</span> <span class="n">runner</span><span class="p">){</span>
-  <span class="cm">/** PARAMETERS */</span>
-  <span class="n">LogicalVector</span> <span class="n">param</span> <span class="o">=</span> <span class="n">RcppDeepState_LogicalVector</span><span class="p">();</span>
+  <span class="n">INPUTS</span>
 
   <span class="cm">/** INPUTS DUMP */</span>
   <span class="n">qs</span><span class="o">::</span><span class="n">c_qsave</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="s">"./inputs/param.qs"</span><span class="p">,</span> <span class="s">"high"</span><span class="p">,</span> <span class="s">"zstd"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
