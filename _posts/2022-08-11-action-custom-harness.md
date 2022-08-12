@@ -5,7 +5,7 @@ description: Guide to provide RcppDeepState-action a custom test harness for a f
 badges: true
 categories: [RcppDeepState, GitHub Action]
 comments: false
-title: Provide a custom test harness to RcppDeepState-action
+title: Provide a custom test harness to RcppDeepState GitHub Action
 ---
 
 
