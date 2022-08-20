@@ -102,9 +102,9 @@ details.description:not([open]) summary::after {
 
 // Adjust font size for footnotes.
 .footnotes {
-  font-size: 12px !important;
+  font-size: 13px !important;
   p, li{
-    font-size: 12px !important;
+    font-size: 13px !important;
  } 
 }
 
@@ -256,6 +256,10 @@ table {
 
 pre code {
   font-size: 15px !important;
+}
+
+code {
+  font-size: 16px !important;
 }
 
 // Handle youtube videos, so they dont break on mobile devices
