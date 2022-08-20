@@ -30,8 +30,9 @@ img.emoji{
 
 // make non-headings slightly lighter
 .post-content p, .post-content li {
-  font-size: 1.1rem;
-  color: #515151;
+  font-size: 1rem;
+  color: #1a1a1a;
+  font-weight: 300;
 }
 
 .post-link{
@@ -255,11 +256,11 @@ table {
 }
 
 pre code {
-  font-size: 1rem !important;
+  font-size: 0.9rem;
 }
 
 code {
-  font-size: 1rem  !important;
+  font-size: 0.9rem;
 }
 
 // Handle youtube videos, so they dont break on mobile devices
