@@ -95,45 +95,20 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h1"><a href="#introduction-to-rcppdeepstate">Introduction to RcppDeepState</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#rcpp">Rcpp</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#installation">Installation</a></li>
-<li class="toc-entry toc-h3"><a href="#sample-usage">Sample usage</a></li>
-<li class="toc-entry toc-h3"><a href="#rcpp-based-package">Rcpp based package</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#rcppdeepstate">RcppDeepState</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#installation-process">Installation process</a></li>
-<li class="toc-entry toc-h3"><a href="#steps">Steps</a></li>
-<li class="toc-entry toc-h3"><a href="#rcppdeepstate-auxiliary-functions">RcppDeepState auxiliary functions</a></li>
-<li class="toc-entry toc-h3"><a href="#rcppdeepstate-testharness-sample">RcppDeepState TestHarness sample</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
-</ul>
-</li>
-</ul><h1 id="introduction-to-rcppdeepstate">
-<a class="anchor" href="#introduction-to-rcppdeepstate" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction to RcppDeepState</h1>
+    <h1 id="introduction-to-rcppdeepstate">Introduction to RcppDeepState</h1>
 <p>In previous posts, we’ve shown how to use DeepState in conjunction with Valgrind to create a tool that can detect more subtle programming errors in the code. In this post, we’ll introduce RcppDeepState, which will add another brick to this toolkit.</p>
 
-<h2 id="rcpp">
-<a class="anchor" href="#rcpp" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rcpp</h2>
+<h2 id="rcpp">Rcpp</h2>
 <p>The Rcpp package<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> gives R developers a way to write C++ code for some of its modules. It’s sometimes useful to write C++ code in place of R functions; it’s a performance trade-off. It has been demonstrated that R is particularly inefficient in computing recursive functions when compared to C++.</p>
 
 <p>It’s not the purpose of this article to discuss the Rcpp library, however what you need to know in order to continue is that Rcpp allows to call some external C++ functions exported to the R environment by tagging them with the <code class="language-plaintext highlighter-rouge">// [[Rcpp::export]]</code> comment on top of them.</p>
 
-<h3 id="installation">
-<a class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
+<h3 id="installation">Installation</h3>
 <p>The installation of the library is quite a straightforward task since the package is available on CRAN.</p>
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"Rcpp"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<h3 id="sample-usage">
-<a class="anchor" href="#sample-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample usage</h3>
+<h3 id="sample-usage">Sample usage</h3>
 <p>Let’s look at a simple example of a Fibonacci recursive function written in C++ and exported to the R environment to have a better idea of how Rcpp works.
 Let’s start with a C++ definition of the Fibonacci function.</p>
 
@@ -162,28 +137,22 @@ Let’s start with a C++ definition of the Fibonacci function.</p>
 </span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">8</span><span class="w">
 </span></code></pre></div></div>
 
-<h3 id="rcpp-based-package">
-<a class="anchor" href="#rcpp-based-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rcpp based package</h3>
+<h3 id="rcpp-based-package">Rcpp based package</h3>
 <p>In the previous example we ran a single C++ file, however most of the times Rcpp is bundled inside packages. This allows users to use this packages without actually having any C++ development tool. To initialize a package using Rcpp, we use the <code class="language-plaintext highlighter-rouge">Rcpp.package.skeleton</code> function.
 If you want to generate a package based on the previous Rcpp fibonacci script, simply supply a list of C++ files to the skeleton function’s <code class="language-plaintext highlighter-rouge">cpp_files</code> parameter.</p>
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Rcpp.package.skeleton</span><span class="p">(</span><span class="s2">"Fibonacci"</span><span class="p">,</span><span class="w"> </span><span class="n">example_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">cpp_files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"fibonacci.cpp"</span><span class="p">))</span><span class="w">
 </span></code></pre></div></div>
 <p>This way we end up with a folder containing a working Rcpp based module:</p>
 <ul>
-  <li>Rcpp source file are located in <code class="language-plaintext highlighter-rouge">src</code>
-</li>
-  <li>R files are located in <code class="language-plaintext highlighter-rouge">R</code>
-</li>
-  <li>Rd documentation files are located in <code class="language-plaintext highlighter-rouge">man</code>
-</li>
+  <li>Rcpp source file are located in <code class="language-plaintext highlighter-rouge">src</code></li>
+  <li>R files are located in <code class="language-plaintext highlighter-rouge">R</code></li>
+  <li>Rd documentation files are located in <code class="language-plaintext highlighter-rouge">man</code></li>
 </ul>
 
-<h2 id="rcppdeepstate">
-<a class="anchor" href="#rcppdeepstate" aria-hidden="true"><span class="octicon octicon-link"></span></a>RcppDeepState</h2>
+<h2 id="rcppdeepstate">RcppDeepState</h2>
 <p>Let’s get started with the main topic of this article: RcppDeepState. RcppDeepState is a combination of three different tools: Rcpp, DeepState, and Valgrind. RcppDeepState’s purpose is to perform fuzz testing on Rcpp-based modules. The related work is restricted to R-level fuzzing and does not include fuzz testing of compiled C++ code developed with Rcpp. The lack of such support for fuzz testing led Akhila Chowdary <sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> to create such a powerful tool.</p>
 
-<h3 id="installation-process">
-<a class="anchor" href="#installation-process" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation process</h3>
+<h3 id="installation-process">Installation process</h3>
 <p>Since RcppDeepState is not available on CRAN, it must be installed manually.
 We can use the traditional devtools way to download the package from the official repository and install it:</p>
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"devtools"</span><span class="p">)</span><span class="w">
@@ -195,8 +164,7 @@ We can use the traditional devtools way to download the package from the officia
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"/path/to/RcppDeepState"</span><span class="p">,</span><span class="w"> </span><span class="n">repos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s2">"source"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<h3 id="steps">
-<a class="anchor" href="#steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Steps</h3>
+<h3 id="steps">Steps</h3>
 <p>In order to perform fuzz testing, RcppDeepState follows the same steps we have used in the previous posts, with a few more steps in between:</p>
 <ul>
   <li>find the exported Rcpp functions</li>
@@ -206,32 +174,23 @@ We can use the traditional devtools way to download the package from the officia
 
 <p>Some steps are left out, such as the automatic test harness creation. We will see this later on in another post.</p>
 
-<h3 id="rcppdeepstate-auxiliary-functions">
-<a class="anchor" href="#rcppdeepstate-auxiliary-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>RcppDeepState auxiliary functions</h3>
+<h3 id="rcppdeepstate-auxiliary-functions">RcppDeepState auxiliary functions</h3>
 <p>The objective of RcppDeepState is to create a link between Rcpp and DeepState in order to perform fuzz testing. This can be done by using some C++ auxiliary function that initializes all the necessary symbolic variables. Symbolic variables were already discussed in a previous article <sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>.</p>
 
 <p>A list of common auxiliary functions is reported in the following list:</p>
 <ul>
-  <li>
-<code class="language-plaintext highlighter-rouge">RcppDeepState_int()</code>: generates an integer symbolic variable. Optionally, the parameters <code class="language-plaintext highlighter-rouge">int low, int high</code> can be used to restrict the generated numbers in a range</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">RcppDeepState_double()</code>: generates a double symbolic variable. Optionally, the parameters <code class="language-plaintext highlighter-rouge">double low, double high</code> can be used to restrict the generated numbers in a range</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">RcppDeepState_IntegerVector</code>: generates a vector of integers with a size in the range 0-100 (inclusive). Optionally, the parameters <code class="language-plaintext highlighter-rouge">int size, int low, int high</code> can be used to specify the vector size and to restrict the generated numbers in a range.</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">RcppDeepState_NumericVector()</code>: generates a vector of doubles with a size in the range 0-100 (inclusive). Optionally, the parameters <code class="language-plaintext highlighter-rouge">int size, int low, int high</code> can be used to specify the vector size and to restrict the generated numbers in a range.</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">RcppDeepState_NumericMatrix()</code>: generates a matrix of doubles with a size in the range (rows=0,cols=0) and (10,10). Optionally, the parameters <code class="language-plaintext highlighter-rouge">int row,int column,int low,int high</code> can be used to specify the matrix size (in terms of rows and cols) and to restrict the generated numbers in a range.</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">RcppDeepState_CharacterVector()</code>: generates a vector of characters with a size in the range 0-100 (inclusive).</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">RcppDeepState_string()</code>: generates a string of a length up to 26 characters taken from the alphabet.</li>
+  <li><code class="language-plaintext highlighter-rouge">RcppDeepState_int()</code>: generates an integer symbolic variable. Optionally, the parameters <code class="language-plaintext highlighter-rouge">int low, int high</code> can be used to restrict the generated numbers in a range</li>
+  <li><code class="language-plaintext highlighter-rouge">RcppDeepState_double()</code>: generates a double symbolic variable. Optionally, the parameters <code class="language-plaintext highlighter-rouge">double low, double high</code> can be used to restrict the generated numbers in a range</li>
+  <li><code class="language-plaintext highlighter-rouge">RcppDeepState_IntegerVector</code>: generates a vector of integers with a size in the range 0-100 (inclusive). Optionally, the parameters <code class="language-plaintext highlighter-rouge">int size, int low, int high</code> can be used to specify the vector size and to restrict the generated numbers in a range.</li>
+  <li><code class="language-plaintext highlighter-rouge">RcppDeepState_NumericVector()</code>: generates a vector of doubles with a size in the range 0-100 (inclusive). Optionally, the parameters <code class="language-plaintext highlighter-rouge">int size, int low, int high</code> can be used to specify the vector size and to restrict the generated numbers in a range.</li>
+  <li><code class="language-plaintext highlighter-rouge">RcppDeepState_NumericMatrix()</code>: generates a matrix of doubles with a size in the range (rows=0,cols=0) and (10,10). Optionally, the parameters <code class="language-plaintext highlighter-rouge">int row,int column,int low,int high</code> can be used to specify the matrix size (in terms of rows and cols) and to restrict the generated numbers in a range.</li>
+  <li><code class="language-plaintext highlighter-rouge">RcppDeepState_CharacterVector()</code>: generates a vector of characters with a size in the range 0-100 (inclusive).</li>
+  <li><code class="language-plaintext highlighter-rouge">RcppDeepState_string()</code>: generates a string of a length up to 26 characters taken from the alphabet.</li>
 </ul>
 
 <p>This functions can be used in the test harness <code class="language-plaintext highlighter-rouge">TEST</code> procedure. Let’s use an example to further understand this.</p>
 
-<h3 id="rcppdeepstate-testharness-sample">
-<a class="anchor" href="#rcppdeepstate-testharness-sample" aria-hidden="true"><span class="octicon octicon-link"></span></a>RcppDeepState TestHarness sample</h3>
+<h3 id="rcppdeepstate-testharness-sample">RcppDeepState TestHarness sample</h3>
 <p>RcppDeepState has an automated test harness generation function, <code class="language-plaintext highlighter-rouge">deepstate_harness_create()</code>. However, we manually create a TestHarness using the auxiliary functions indicated above in order to understand how RcppDeepState works behind the scenes.</p>
 
 <p>Assume you have a leaked function that takes an integer as an input and allocates some Heap memory to it. Consider the case where the developer failed to free the used memory if the integer parameter is more than <code class="language-plaintext highlighter-rouge">500</code>. Imagine that for some strange motivation the developer forgot to free the used memory if the integer parameter is greater than <code class="language-plaintext highlighter-rouge">500</code> for some strange reason. The following is an example of the function:</p>
@@ -370,20 +329,19 @@ We can use the traditional devtools way to download the package from the officia
 <span class="na">==29423== ERROR SUMMARY</span><span class="pi">:</span> <span class="na">0 errors from 0 contexts (suppressed</span><span class="pi">:</span> <span class="s">0 from 0)</span>
 </code></pre></div></div>
 
-<h2 id="conclusion">
-<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 <p>In this post we have seen how to use RcppDeepState auxiliary functions to manually generate a Test Harness. This is a procedure that is always done in an automated way by using <code class="language-plaintext highlighter-rouge">deepstate_harness_create()</code>. The purpose of this post is to understand how the Test Harness creation procedure works and combine RcppDeepState with a simple Rcpp program.</p>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p><a href="https://cran.r-project.org/web/packages/Rcpp/index.html">Rcpp package on CRAN</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://cran.r-project.org/web/packages/Rcpp/index.html">Rcpp package on CRAN</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p><a href="https://akhikolla.github.io/">Akhila Chowdary blog</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://akhikolla.github.io/">Akhila Chowdary blog</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:3" role="doc-endnote">
-      <p><a href="https://fabriziosandri.github.io/gsoc-2022-blog/deepstate/fuzz/c++/2022/05/25/about-deepstate.html#symbols-definition">DeepState symbols definition</a> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://fabriziosandri.github.io/gsoc-2022-blog/deepstate/fuzz/c++/2022/05/25/about-deepstate.html#symbols-definition">DeepState symbols definition</a> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

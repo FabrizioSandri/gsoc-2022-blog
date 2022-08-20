@@ -95,19 +95,10 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
-<li class="toc-entry toc-h2"><a href="#week-7">Week 7</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#reference">Reference</a></li>
-</ul>
-</li>
-</ul><h2 id="introduction">
-<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+    <h2 id="introduction">Introduction</h2>
 <p>This post is meant to be a reference for the work I’ve done during the seventh week.</p>
 
-<h2 id="week-7">
-<a class="anchor" href="#week-7" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 7</h2>
+<h2 id="week-7">Week 7</h2>
 <p>I have spent most of this week’s time working on the RcppDeepState GitHub Action. As discussed in my previous blog post<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> I decided to integrate the actual docker based action with a composite one. Thanks to the precious advices of my mentors, I have performed this update, moving the actual docker architecture to the <code class="language-plaintext highlighter-rouge">docker</code> folder of the repository and creating a new <code class="language-plaintext highlighter-rouge">action.yml</code> file for the composite architecture. In this way the final result is a more flexible action that can be easily integrated with other actions available on the marketplace. In particular I have done the following improvements:</p>
 <ul>
   <li>artifact upload: the results of RcppDeepState analysis are compressed in a zip file and uploaded as an artifact file to GitHub. By doing this, the user can easily download the analysis results and check the logs, inputs and outputs;</li>
@@ -164,8 +155,7 @@ Here is a example of a comment message</li>
 
 <p>In terms of RcppDeepState, I improved the harness creation procedure by deleting some superfluous if/else lines and reorganizing all the information for each supported datatype into a data.table structure.</p>
 
-<h3 id="reference">
-<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h3>
+<h3 id="reference">Reference</h3>
 <p>Pull requests:</p>
 <ul>
   <li><a href="https://github.com/FabrizioSandri/RcppDeepState/pull/9">Logging improvements</a></li>
@@ -177,12 +167,12 @@ Here is a example of a comment message</li>
   <li><a href="https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/07/11/move-to-composite.html">Moving to a composite GitHub Action</a></li>
 </ul>
 
-<hr>
+<hr />
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p><a href="https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/07/11/move-to-composite.html">Moving to a composite GitHub Action</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/07/11/move-to-composite.html">Moving to a composite GitHub Action</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

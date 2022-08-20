@@ -95,37 +95,11 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h1"><a href="#deepstate-introduction">DeepState Introduction</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#installation">Installation</a></li>
-<li class="toc-entry toc-h2"><a href="#test-harness-creation">Test Harness creation</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#symbols-definition">Symbols definition</a></li>
-<li class="toc-entry toc-h3"><a href="#pre-conditions">Pre conditions</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#example">Example</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h3"><a href="#post-conditions">Post conditions</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#example-1">Example</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h3"><a href="#test-harness-compilation">Test harness compilation</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#fuzz-test-execution">Fuzz test execution</a></li>
-<li class="toc-entry toc-h2"><a href="#advanced-fuzz-testing">Advanced fuzz testing</a></li>
-</ul>
-</li>
-</ul><h1 id="deepstate-introduction">
-<a class="anchor" href="#deepstate-introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>DeepState Introduction</h1>
+    <h1 id="deepstate-introduction">DeepState Introduction</h1>
 <p>DeepState is a framework which provides developers the possibility to perform symbolic unit testing on some particular C++ functions by writing test harnesses. For writing a test harness, Deepstate follows a similar approch to the one of Google tests <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.
 The common problem between most of the symbolic unit testing libraries is that you as developer have to know how to use other binary analysis tools. With Deepstate this problem is solved by provinding a common interface the test harness creation process.</p>
 
-<h2 id="installation">
-<a class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+<h2 id="installation">Installation</h2>
 <p>The installation process is quite simple, you just need to follow the istruction provided in the <em>Readme</em> file in the Deepstate repository on GitHub <sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>. In my case after the installation of all the necessary dependencies, I downloaded the repository snapshot using the standard <code class="language-plaintext highlighter-rouge">git clone</code> approach</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/trailofbits/deepstate.git
@@ -143,8 +117,7 @@ make
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>make <span class="nb">install</span>
 </code></pre></div></div>
 
-<h2 id="test-harness-creation">
-<a class="anchor" href="#test-harness-creation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test Harness creation</h2>
+<h2 id="test-harness-creation">Test Harness creation</h2>
 <p>Testing C++ code is not a straightforward task and it need to be accomplished in the correct way, otherwise it will lead to a failure both in the test and also in the source code. A Test Harness is a collection of software that allows to test a particular program by executing under some conditions.</p>
 
 <p>The first step in test harness creation is to include  the library and optionally set the namespace, in order to use all the functionalities provided by DeepState :</p>
@@ -167,49 +140,34 @@ make
 
 <p>Let’s dive into this three main parts of a Test Harness creation procedure.</p>
 
-<h3 id="symbols-definition">
-<a class="anchor" href="#symbols-definition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Symbols definition</h3>
+<h3 id="symbols-definition">Symbols definition</h3>
 <p>The first part consists in the definition of the symbols that will be used as input for the function we need to test. The main goal for this task is to have a set of variables that will be filled by the DeepState with some non-deterministic data.</p>
 
 <p>Symbolic execution tools and fuzzers needs to know which variable is symbolic in order to control them. Symbols definitions for basic data types (<code class="language-plaintext highlighter-rouge">int</code>, <code class="language-plaintext highlighter-rouge">char</code>, ..) are defined by concatenating the data type name with the <code class="language-plaintext highlighter-rouge">symbolic_</code> prefix (<code class="language-plaintext highlighter-rouge">symbolic_int</code>, <code class="language-plaintext highlighter-rouge">symbolic_char</code>, ..).</p>
 
 <p>DeepState provides us some useful functions to initialize our symbols with random data:</p>
 <ul>
-  <li>
-<code class="language-plaintext highlighter-rouge">int DeepState_IntInRange(int low, int high)</code> : initializes the symbol with an integer in the range low-high</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">float DeepState_FloatInRange(float low, float high)</code> : initializes the symbol with a float number in the range low-high</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">double DeepState_DoubleInRange(double low, double high)</code> : initializes the symbol with a double number in the range low-high</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">char* DeepState_CStr_C(size_t len, const char* allowed)</code> : initializes a character array (a string)  of length <code class="language-plaintext highlighter-rouge">len</code> with a set of allowed character taken from the character array `allowed</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">char* DeepState_CStrUpToLen(size_t maxLen, const char* allowed)</code> : initializes a character array (a string) of length  up to <code class="language-plaintext highlighter-rouge">len</code> with a set of allowed character taken from the character array <code class="language-plaintext highlighter-rouge">allowed</code>
-</li>
+  <li><code class="language-plaintext highlighter-rouge">int DeepState_IntInRange(int low, int high)</code> : initializes the symbol with an integer in the range low-high</li>
+  <li><code class="language-plaintext highlighter-rouge">float DeepState_FloatInRange(float low, float high)</code> : initializes the symbol with a float number in the range low-high</li>
+  <li><code class="language-plaintext highlighter-rouge">double DeepState_DoubleInRange(double low, double high)</code> : initializes the symbol with a double number in the range low-high</li>
+  <li><code class="language-plaintext highlighter-rouge">char* DeepState_CStr_C(size_t len, const char* allowed)</code> : initializes a character array (a string)  of length <code class="language-plaintext highlighter-rouge">len</code> with a set of allowed character taken from the character array `allowed</li>
+  <li><code class="language-plaintext highlighter-rouge">char* DeepState_CStrUpToLen(size_t maxLen, const char* allowed)</code> : initializes a character array (a string) of length  up to <code class="language-plaintext highlighter-rouge">len</code> with a set of allowed character taken from the character array <code class="language-plaintext highlighter-rouge">allowed</code></li>
 </ul>
 
-<h3 id="pre-conditions">
-<a class="anchor" href="#pre-conditions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pre conditions</h3>
+<h3 id="pre-conditions">Pre conditions</h3>
 <p>Sometimes there is the necessity to constraint a little bit more the symbolic variables defined previously. This means that you have some particular constraint that your symbolic variable need to comply with, before running into the tests. All the tests that do not pass the pre conditions will be considered <code class="language-plaintext highlighter-rouge">abandoned</code>.</p>
 
 <p>Pre conditions are defined using the <code class="language-plaintext highlighter-rouge">ASSUME</code> macro and also by the following more specialized ones:</p>
 <ul>
-  <li>
-<code class="language-plaintext highlighter-rouge">ASSUME_EQ</code> : checks for the equality of the 2 parameters (operator ==)</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">ASSUME_NE</code> : checks if the 2 parameters are not equal (operator !=)</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">ASSUME_LT</code> : checks if the first parameter is less than the second (operator &lt;)</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">ASSUME_LE</code> : checks if the first parameter is less or equal to the second (operator &lt;=)</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">ASSUME_GT</code> : checks if the first parameter is greater than the second (operator &gt;)</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">ASSUME_GE</code> : checks if the first parameter is greater or equal to the second (operator &gt;=)</li>
+  <li><code class="language-plaintext highlighter-rouge">ASSUME_EQ</code> : checks for the equality of the 2 parameters (operator ==)</li>
+  <li><code class="language-plaintext highlighter-rouge">ASSUME_NE</code> : checks if the 2 parameters are not equal (operator !=)</li>
+  <li><code class="language-plaintext highlighter-rouge">ASSUME_LT</code> : checks if the first parameter is less than the second (operator &lt;)</li>
+  <li><code class="language-plaintext highlighter-rouge">ASSUME_LE</code> : checks if the first parameter is less or equal to the second (operator &lt;=)</li>
+  <li><code class="language-plaintext highlighter-rouge">ASSUME_GT</code> : checks if the first parameter is greater than the second (operator &gt;)</li>
+  <li><code class="language-plaintext highlighter-rouge">ASSUME_GE</code> : checks if the first parameter is greater or equal to the second (operator &gt;=)</li>
 </ul>
 
-<h4 id="example">
-<a class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h4>
+<h4 id="example">Example</h4>
 <p>Suppose you have to pass to your test only strings with a minimum length of 5 characters and up to 10 characters (both inclusive). This types of strings can not be created by only using <code class="language-plaintext highlighter-rouge">DeepState_CStrUpToLen</code>. We have to constraint the fact that the length of the string should also be greater then 5. This may be accomplished by using a precondition that checks if the created string meets the requirement that its length be larger than or equal to 5. With the preceding list in mind, this can be implemented with the <code class="language-plaintext highlighter-rouge">ASSUME_GE</code> macro in the following way:</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">TEST</span><span class="p">(</span><span class="n">UnitName</span><span class="p">,</span> <span class="n">TestName</span><span class="p">)</span> <span class="p">{</span>
@@ -221,12 +179,10 @@ make
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h3 id="post-conditions">
-<a class="anchor" href="#post-conditions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Post conditions</h3>
+<h3 id="post-conditions">Post conditions</h3>
 <p>The last part is the check of the execution result of a test. This can be done with post conditions that checks if the results satisfy some constraints. Similar to the pre conditions, the post condition defines a list of macros that help us to perform this checks. This time a post condition is defined using the <code class="language-plaintext highlighter-rouge">ASSERT</code> macro and all it’s specialized versions (<code class="language-plaintext highlighter-rouge">ASSERT_EQ</code>, <code class="language-plaintext highlighter-rouge">ASSERT_NE</code>, <code class="language-plaintext highlighter-rouge">ASSERT_FALSE</code>, …).</p>
 
-<h4 id="example-1">
-<a class="anchor" href="#example-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h4>
+<h4 id="example-1">Example</h4>
 <p>Assume that we want to test a function that compress a string as input into a fixed length string : an hash function like MD5. A possible post condition will check if the hashed string is of a certain length (in the case of md5, exactly 32 characters).</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">TEST</span><span class="p">(</span><span class="n">UnitName</span><span class="p">,</span> <span class="n">TestName</span><span class="p">)</span> <span class="p">{</span>
@@ -243,16 +199,14 @@ make
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h3 id="test-harness-compilation">
-<a class="anchor" href="#test-harness-compilation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test harness compilation</h3>
+<h3 id="test-harness-compilation">Test harness compilation</h3>
 <p>You can compile the test harness using a standard C++ compiler like g++ by specifying the linker to include the deepstate header with the <code class="language-plaintext highlighter-rouge">-ldeepstate</code> parameter</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>g++ <span class="nt">-ldeepstate</span> <span class="nt">-o</span> harness harness.cpp 
 </code></pre></div></div>
 
 <p>The output of this procedure is a compiled harness file that can be executed.</p>
 
-<h2 id="fuzz-test-execution">
-<a class="anchor" href="#fuzz-test-execution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fuzz test execution</h2>
+<h2 id="fuzz-test-execution">Fuzz test execution</h2>
 <p>The compiled test harness can be executed using some analysis tools like <code class="language-plaintext highlighter-rouge">manticore</code>, <code class="language-plaintext highlighter-rouge">angr</code> or <code class="language-plaintext highlighter-rouge">valgrind</code> to discover memory leaks in the code. You can also run it in a standalone mode by executing it directly in the console with the <code class="language-plaintext highlighter-rouge">--fuzz</code> option. This last option enables DeepState to perform brute force fuzzing. Another useful option is <code class="language-plaintext highlighter-rouge">--timeout</code> that allows to specify a timeout(in seconds) after which the fuzzing procedure will be stopped. In addition with the <code class="language-plaintext highlighter-rouge">--input_which_test</code> you can specify the test to execute in the format <code class="language-plaintext highlighter-rouge">UnitName_TestName</code>.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./harness <span class="nt">--fuzz</span> <span class="nt">--timeout</span><span class="o">=</span>5 <span class="nt">--input_which_test</span> UnitName_TestName
@@ -260,17 +214,16 @@ make
 
 <p>This execution will give us the total number of <em>failed</em>, <em>passed</em> and <em>abandoned</em> tests</p>
 
-<h2 id="advanced-fuzz-testing">
-<a class="anchor" href="#advanced-fuzz-testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advanced fuzz testing</h2>
+<h2 id="advanced-fuzz-testing">Advanced fuzz testing</h2>
 <p>I’ll go through how to use DeepState in conjunction with more complex tools like Valgrind in the next blog posts.</p>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p><a href="https://google.github.io/googletest/">https://google.github.io/googletest/</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://google.github.io/googletest/">https://google.github.io/googletest/</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p><a href="https://github.com/trailofbits/deepstate#buildnrun">https://github.com/trailofbits/deepstate#buildnrun</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://github.com/trailofbits/deepstate#buildnrun">https://github.com/trailofbits/deepstate#buildnrun</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

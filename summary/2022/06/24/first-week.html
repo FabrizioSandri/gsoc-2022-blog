@@ -95,31 +95,16 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
-<li class="toc-entry toc-h2"><a href="#weeks-1-3-community-bonding-period">Weeks 1-3 (Community Bonding Period)</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#reference">Reference</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#week-4">Week 4</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#reference-1">Reference</a></li>
-</ul>
-</li>
-</ul><h2 id="introduction">
-<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+    <h2 id="introduction">Introduction</h2>
 <p>This post is meant to be a reference for the work I’ve done in the Community Bonding Period and the first coding period’s first week.</p>
 
-<h2 id="weeks-1-3-community-bonding-period">
-<a class="anchor" href="#weeks-1-3-community-bonding-period" aria-hidden="true"><span class="octicon octicon-link"></span></a>Weeks 1-3 (Community Bonding Period)</h2>
+<h2 id="weeks-1-3-community-bonding-period">Weeks 1-3 (Community Bonding Period)</h2>
 <p>I spent this three weeks of Community Bonding Period interacting with my mentors, familiarizing myself with the tools and working on high priority tasks.</p>
 
 <p>Using this blog as a way to familiarize myself with the tools, I started working with DeepState, showing some basic examples and moving step by step with more complex one. Then I gave a brief introduction to Valgrind and showed how it might be used in conjunction with DeepState to produce a sophisticated fuzz testing toolbox.
 When these three powerful tools —Valgrind, DeepState, and Rcpp— were integrated, I introduced Rcpp and finally RcppDeepState.</p>
 
-<h3 id="reference">
-<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h3>
+<h3 id="reference">Reference</h3>
 <p>Blog posts:</p>
 <ul>
   <li><a href="https://fabriziosandri.github.io/gsoc-2022-blog/deepstate/fuzz/c++/2022/05/17/deepstate-sample.html">Sample DeepState fuzz test</a></li>
@@ -147,8 +132,7 @@ When these three powerful tools —Valgrind, DeepState, and Rcpp— were integra
   <li><a href="https://github.com/RcppCore/Rcpp/issues/1221">Unexpected Segmentation Fault</a></li>
 </ul>
 
-<h2 id="week-4">
-<a class="anchor" href="#week-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 4</h2>
+<h2 id="week-4">Week 4</h2>
 <p>I have spent the most of this first week focusing on some important tasks that I discovered during the Community Bonding Period.
 Everything specifically began when I discovered that debug symbols were not present by default on some systems. This led to the creation of the Makevars file inside the <code class="language-plaintext highlighter-rouge">src</code> directory of each package, before <code class="language-plaintext highlighter-rouge">R CMD INSTALL</code> is run. Based on this I created a custom workflow to check if debug symbols are included by default or not on the system. I discovered several bugs in the RcppDeepState library while developing this workflow and was able to effectively fix them.</p>
 
@@ -160,8 +144,7 @@ Everything specifically began when I discovered that debug symbols were not pres
   <li>solved the problem of the Segmentation fault that prevented DeepState to create the output files;</li>
 </ol>
 
-<h3 id="reference-1">
-<a class="anchor" href="#reference-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h3>
+<h3 id="reference-1">Reference</h3>
 <p>Blog posts:</p>
 <ul>
   <li><a href="https://fabriziosandri.github.io/gsoc-2022-blog/rcpp/debug/r/c++/valgrind/2022/06/10/rcpp-debugging.html">Debugging Rcpp outside of R</a></li>

@@ -95,45 +95,28 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
-<li class="toc-entry toc-h2"><a href="#week-6">Week 6</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#rcppdeepstate">RcppDeepState</a></li>
-<li class="toc-entry toc-h4"><a href="#rcppdeepstate-action">RcppDeepState Action</a></li>
-<li class="toc-entry toc-h3"><a href="#reference">Reference</a></li>
-</ul>
-</li>
-</ul><h2 id="introduction">
-<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+    <h2 id="introduction">Introduction</h2>
 <p>This post is meant to be a reference for the work I’ve done during the sixth week.</p>
 
-<h2 id="week-6">
-<a class="anchor" href="#week-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 6</h2>
+<h2 id="week-6">Week 6</h2>
 <p>After the creation of a RcppDeepState GitHub Action prototype of the previous week, I managed to organize my week spending some time working on RcppDeepState and the rest of the time improving the existing GitHub Action prototype.</p>
 
-<h4 id="rcppdeepstate">
-<a class="anchor" href="#rcppdeepstate" aria-hidden="true"><span class="octicon octicon-link"></span></a>RcppDeepState</h4>
+<h4 id="rcppdeepstate">RcppDeepState</h4>
 <p>I started by doing some improvements to the RcppDeepState’s logs, printing for each function not analyzed, the list of parameters that fall out of the allowed list. I also added a <code class="language-plaintext highlighter-rouge">verbose</code> parameter to all the functions that generates some textual output. This option is used to offer more detailed information if set to <code class="language-plaintext highlighter-rouge">TRUE</code>.</p>
 
 <p>Additionally, I discovered that RcppDeepState did not execute the analysis of a package containing a function with an argument of type <code class="language-plaintext highlighter-rouge">Rcpp::String</code> since this datatype is not one that is supported. To fill this gap, I added a method that creates a random <code class="language-plaintext highlighter-rouge">Rcpp::String</code> to the <code class="language-plaintext highlighter-rouge">RcppDeepState.h</code> header file.</p>
 
-<h4 id="rcppdeepstate-action">
-<a class="anchor" href="#rcppdeepstate-action" aria-hidden="true"><span class="octicon octicon-link"></span></a>RcppDeepState Action</h4>
+<h4 id="rcppdeepstate-action">RcppDeepState Action</h4>
 <p>On the Action side, I implemented the exit codes allowing the Action to report a fail status if the RcppDeepState’s analysis discovers any issues. If no errors have been detected, the analysis script produces a status code of 0, and if at least one issue has been discovered by RcppDeepState, it returns a status code of 1.</p>
 
 <p>I also extended the Action’s input arguments, providing programmers more flexibility over the RcppDeepState options. The following input parameters have been introduced</p>
 <ul>
-  <li>
-<code class="language-plaintext highlighter-rouge">seed</code>: input parameter that will be used as an input seed for deterministic fuzz testing;</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">time_limit</code>: used to control the time which the fuzzing phase will be run;</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">max_inputs</code>: used to provide a maximum number of inputs to analyze</li>
+  <li><code class="language-plaintext highlighter-rouge">seed</code>: input parameter that will be used as an input seed for deterministic fuzz testing;</li>
+  <li><code class="language-plaintext highlighter-rouge">time_limit</code>: used to control the time which the fuzzing phase will be run;</li>
+  <li><code class="language-plaintext highlighter-rouge">max_inputs</code>: used to provide a maximum number of inputs to analyze</li>
 </ul>
 
-<h3 id="reference">
-<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h3>
+<h3 id="reference">Reference</h3>
 <p>Pull requests:</p>
 <ul>
   <li><a href="https://github.com/FabrizioSandri/RcppDeepState/pull/5">Harness creation improvements</a></li>

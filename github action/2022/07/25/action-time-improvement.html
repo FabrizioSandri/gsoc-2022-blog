@@ -95,23 +95,15 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
-<li class="toc-entry toc-h2"><a href="#considerations">Considerations</a></li>
-<li class="toc-entry toc-h2"><a href="#switch-to-a-prebuilt-docker-image">Switch to a prebuilt docker image</a></li>
-<li class="toc-entry toc-h2"><a href="#continuous-deploy-of-the-docker-image">Continuous deploy of the Docker image</a></li>
-</ul><h2 id="introduction">
-<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+    <h2 id="introduction">Introduction</h2>
 <p>In the previous week I successfully integrated the original Docker action with a composite one. The main result of this update is a more flexible action that makes possible to publish the analysis results on Github; this is possible by publishing an artifact file containing the inputs and adding comments to pull requests. In the past working week (Week 7) I discussed with my mentor Randy about this change and he suggested me to prebuild the entire action and upload it to Docker Hub, which is a service provided by Docker for sharing container images<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. In this blog post I describe the process that will be followed this week, in order to prebuild the Docker image and publish it to Docker Hub.</p>
 
-<h2 id="considerations">
-<a class="anchor" href="#considerations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Considerations</h2>
+<h2 id="considerations">Considerations</h2>
 <p>The actual execution time of the Action is about 15-30 minutes. A huge amount of this time is spent installing all the missing dependencies, which includes the R package, devtools, and so on. Installing each of these every time the action is triggered is useless. A better approach instead would be to prebuild the docker container and save the image so that it can be reused each time the action will be run. This can be accomplished by publishing the image on Docker Hub. What I expect from this improvement is a reduction of the amount of time spent installing the dependencies.</p>
 
 <p>One last thing to think about is moving the devtools installation command from the <code class="language-plaintext highlighter-rouge">entrypoint.sh</code> file to the Dockerfile so that it will be installed when the container is built.</p>
 
-<h2 id="switch-to-a-prebuilt-docker-image">
-<a class="anchor" href="#switch-to-a-prebuilt-docker-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Switch to a prebuilt docker image</h2>
+<h2 id="switch-to-a-prebuilt-docker-image">Switch to a prebuilt docker image</h2>
 <p>The main idea is to replace the actual Action’s Dockerfile with a simple composite step that runs the image from Docker Hub.</p>
 
 <p>In the actual implementation, every time the Action is triggered, a container is built in accordance with the Dockerfile, downloading each dependency one at a time, as you can see in the Dockerfile of the following sample.</p>
@@ -179,8 +171,7 @@ window.onload = wrap_img;
 </code></pre></div></div>
 <p>As you can see the <code class="language-plaintext highlighter-rouge">checkout</code> step has been removed, in fact there’s no need to download the Dockerfile and the related files(<code class="language-plaintext highlighter-rouge">/docker</code> folder). This solves the problem of specifying the branch name in the checkout step mentioned by Randy in the pull request #4<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">2</a></sup>. However this introduces a new problem: I have to decide which event should trigger the update of the image on Docker Hub. A possible solution for this problem is to update the image every time a new commit on the master branch occurs. The problem with this solution is that, if I make a pull request and want to test some new updates made on the docker image, I have to push the result on the master branch to trigger the update on Docker Hub.</p>
 
-<h2 id="continuous-deploy-of-the-docker-image">
-<a class="anchor" href="#continuous-deploy-of-the-docker-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Continuous deploy of the Docker image</h2>
+<h2 id="continuous-deploy-of-the-docker-image">Continuous deploy of the Docker image</h2>
 <p>Each change to the Docker architecture must be reflected to the image published on Docker Hub. In order to make this process automatic and avoid to manually push the docker image to Docker Hub, as suggested by Randy, there is an existing GitHub Action that automatically builds and publishes Docker images to Docker Hub<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">3</a></sup>. This action can be integrated in the RcppDeepState-action repository inside a workflow’s job that is triggered every time a commit on the master branch occurs.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">jobs</span><span class="pi">:</span>
@@ -213,18 +204,18 @@ window.onload = wrap_img;
 <p>In order to prevent information theft, the token and the username should be kept as a repository secret. In the example above, the variables for the username and token are referred to as <code class="language-plaintext highlighter-rouge">DOCKERHUB_USERNAME</code> and <code class="language-plaintext highlighter-rouge">DOCKERHUB_TOKEN</code> respectively. These parameters have been set in the Security &gt; Secrets &gt; Actions menu on the Settings tab of the repository.
 Once they are defined, they can be used in the following way<code class="language-plaintext highlighter-rouge"> $</code>.</p>
 
-<hr>
+<hr />
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p><a href="https://hub.docker.com/">Docker Hub</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://hub.docker.com/">Docker Hub</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:3" role="doc-endnote">
-      <p><a href="https://github.com/FabrizioSandri/RcppDeepState-action/pull/4#issuecomment-1183670955">Composite action #4</a> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://github.com/FabrizioSandri/RcppDeepState-action/pull/4#issuecomment-1183670955">Composite action #4</a> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p><a href="https://github.com/marketplace/actions/build-and-push-docker-images">GitHub Action - Build and push Docker images</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://github.com/marketplace/actions/build-and-push-docker-images">GitHub Action - Build and push Docker images</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

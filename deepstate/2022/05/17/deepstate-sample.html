@@ -95,16 +95,7 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h1"><a href="#sample-usage-of-the-deepstate-c-library">Sample usage of the Deepstate C++ library</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#test-harness-creation">Test harness creation</a></li>
-<li class="toc-entry toc-h3"><a href="#fuzz-testing">Fuzz testing</a></li>
-<li class="toc-entry toc-h3"><a href="#result">Result</a></li>
-</ul>
-</li>
-</ul><h1 id="sample-usage-of-the-deepstate-c-library">
-<a class="anchor" href="#sample-usage-of-the-deepstate-c-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample usage of the Deepstate C++ library</h1>
+    <h1 id="sample-usage-of-the-deepstate-c-library">Sample usage of the Deepstate C++ library</h1>
 <p>Assume that the NASA FPrime library contains a function that converts a string to a Mixed-Uppercase string. In reality the NASA FPrime contains a lot of functions that deals with strings. 
 What is a Mixed-Uppercase string? With this term I am referring to a string which all characters in odd positions must be capitalized. The following is a very simple function that computes this task:</p>
 
@@ -122,8 +113,7 @@ What is a Mixed-Uppercase string? With this term I am referring to a string whic
 
 <p>This function takes a character array as input and performs the odd-uppercase replacement in place. This function returns the pointer to the first character of the original char vector.</p>
 
-<h3 id="test-harness-creation">
-<a class="anchor" href="#test-harness-creation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test harness creation</h3>
+<h3 id="test-harness-creation">Test harness creation</h3>
 <p>First of all I’ll start writing the TestHarness after I’ve determined what the expectations are for this function. First, I’ll include the DeepState library’s required header files:</p>
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;deepstate/DeepState.hpp&gt;</span><span class="cp">
 </span></code></pre></div></div>
@@ -154,8 +144,7 @@ Finally we execute our function and we check using the <code class="language-pla
     <span class="k">return</span>  <span class="n">res</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<h3 id="fuzz-testing">
-<a class="anchor" href="#fuzz-testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fuzz testing</h3>
+<h3 id="fuzz-testing">Fuzz testing</h3>
 <p>Now that the Test harness is written, I can move on and perform some fuzz testing over the function. First I will compile the Test harness by specifying the linker to include the deepstate header with the <code class="language-plaintext highlighter-rouge">-ldeepstate</code> parameter</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>g++ <span class="nt">-ldeepstate</span> <span class="nt">-o</span> harness harness.cpp 
 </code></pre></div></div>
@@ -163,8 +152,7 @@ Finally we execute our function and we check using the <code class="language-pla
 <p>Finally I run a non deterministic fuzz testing on the TestHarness by executing the compiled TestHarness with the following parameters</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./harness <span class="nt">--fuzz</span> <span class="nt">--timeout</span><span class="o">=</span>1 <span class="nt">--input_which_test</span> MixedUppercase_OnlyGeneratedMixedUppercase
 </code></pre></div></div>
-<h3 id="result">
-<a class="anchor" href="#result" aria-hidden="true"><span class="octicon octicon-link"></span></a>Result</h3>
+<h3 id="result">Result</h3>
 <p>After the execution I can check the results. As expected, in my case no error was found.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Starting fuzzing
 WARNING: No seed provided; using 1652815282

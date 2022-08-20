@@ -98,20 +98,7 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h1"><a href="#introduction">Introduction</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#proof-of-concept">Proof of concept</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#solution">Solution</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#debugging-with-deepstate-and-valgrind">Debugging with Deepstate and valgrind</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h1"><a href="#conclusion">Conclusion</a></li>
-</ul><h1 id="introduction">
-<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h1>
+    <h1 id="introduction">Introduction</h1>
 <p>Sometimes it could be necessary to test your Rcpp defined code using an external tool, like Valgrind or GDB. This process however will almost likely come to a crash of your program with a strange Segmentation Fault error. The error is due to the fact that executing Rcpp code is only possible within a working R environment. I talked about this with a Rcpp community member and his answer is reported in this issue <a href="https://github.com/RcppCore/Rcpp/issues/1221">#1221</a>.</p>
 
 <blockquote>
@@ -121,8 +108,7 @@ window.onload = wrap_img;
 <p>So, the question might appear straightforward, but is it feasible to run Rcpp code outside of a R environment?
 Using RInside, the answer is yes.</p>
 
-<h2 id="proof-of-concept">
-<a class="anchor" href="#proof-of-concept" aria-hidden="true"><span class="octicon octicon-link"></span></a>Proof of concept</h2>
+<h2 id="proof-of-concept">Proof of concept</h2>
 <p>Imagine you have the following <code class="language-plaintext highlighter-rouge">bootstrap</code> function and want to simply execute it and get the result, that you expect to be <code class="language-plaintext highlighter-rouge">10</code>.</p>
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 #include</span> <span class="cpf">&lt;Rcpp.h&gt;</span><span class="cp">
@@ -147,8 +133,7 @@ Using RInside, the answer is yes.</p>
 <span class="o">[</span>1]    23848 segmentation fault <span class="o">(</span>core dumped<span class="o">)</span>  ./bootstrap
 </code></pre></div></div>
 
-<h3 id="solution">
-<a class="anchor" href="#solution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Solution</h3>
+<h3 id="solution">Solution</h3>
 <p>The solution is to embed in your code a working R environment within the process. This can be done using the powerful RInside library. All you have to do is to include the header files and create an embedded R instance. The preceding example will be modified as follows:</p>
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 #include</span> <span class="cpf">&lt;Rcpp.h&gt;</span><span class="cp">
@@ -175,8 +160,7 @@ Using RInside, the answer is yes.</p>
 10
 </code></pre></div></div>
 
-<h2 id="debugging-with-deepstate-and-valgrind">
-<a class="anchor" href="#debugging-with-deepstate-and-valgrind" aria-hidden="true"><span class="octicon octicon-link"></span></a>Debugging with Deepstate and valgrind</h2>
+<h2 id="debugging-with-deepstate-and-valgrind">Debugging with Deepstate and valgrind</h2>
 <p>Now that we have all of the necessary tools, we can start developing our first Rcpp function test harness. Imagine that we want to fuzz test a function named <code class="language-plaintext highlighter-rouge">getFirstElement</code> that returns the first element of an Rcpp IntegerVector. Deepstate might be used to send some randomly initialized vectors to this method in order to discover any memory issues. To do this, we may create a basic test harness that employs a function that produces a random integer vector, in this instance <code class="language-plaintext highlighter-rouge">randomIntegerVector</code>, and then passes that vector to the <code class="language-plaintext highlighter-rouge">getFirstElement</code> function. This is the final result.</p>
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 #include</span> <span class="cpf">&lt;Rcpp.h&gt;</span><span class="cp">
@@ -255,8 +239,7 @@ Using RInside, the answer is yes.</p>
 <span class="na">==43210== ERROR SUMMARY</span><span class="pi">:</span> <span class="na">0 errors from 0 contexts (suppressed</span><span class="pi">:</span> <span class="s">0 from 0)</span>
 </code></pre></div></div>
 
-<h1 id="conclusion">
-<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h1>
+<h1 id="conclusion">Conclusion</h1>
 <p>We were able to run a debugging tool, specifically the Valgrind suite’s Memcheck tool. This demonstrates how integrating many techniques may be an effective method of solving a problem.</p>
 
   </div><a class="u-url" href="/gsoc-2022-blog/rcpp/valgrind/2022/06/10/rcpp-debugging.html" hidden></a>

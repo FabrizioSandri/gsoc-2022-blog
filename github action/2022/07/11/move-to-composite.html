@@ -95,13 +95,7 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
-<li class="toc-entry toc-h2"><a href="#docker-system-motivation">Docker system motivation</a></li>
-<li class="toc-entry toc-h2"><a href="#problem">Problem</a></li>
-<li class="toc-entry toc-h2"><a href="#solution">Solution</a></li>
-</ul><h2 id="introduction">
-<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+    <h2 id="introduction">Introduction</h2>
 <p>In the fifth week of work I’ve created a first working prototype of the GitHub Action for RcppDeepState, based on the considerations that I published in the dedicated blog post<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. Within this post, I discussed three different architectures that might be used when creating a GitHub Action. Among the three possibilities, I selected to develop a GitHub action based on Docker.</p>
 
 <p>However, in the pull request for the Action’s initial prototype, I indicated the potential of switching from a Docker Action to a Composite Action<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>:</p>
@@ -109,29 +103,26 @@ window.onload = wrap_img;
   <p>“In the future, I’ll also think about if I can express this Action as a composite action.”</p>
 </blockquote>
 
-<h2 id="docker-system-motivation">
-<a class="anchor" href="#docker-system-motivation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker system motivation</h2>
+<h2 id="docker-system-motivation">Docker system motivation</h2>
 <p>The key reason for using a Docker-based system is that it enables for the creation of a fully customized environment in which RcppDeepState will execute. This allows me to install only the essential tools and configure the environment such that RcppDeepState fits in. In particular the idea came by the fact that RcppDeepState requires that optimization options must be disabled in the system in order to work with it’s maximum performance. Furthermore, because RcppDeepState can only be executed on Linux-based computers, limiting it to a Docker system based on a Linux container is a reasonable option.</p>
 
-<h2 id="problem">
-<a class="anchor" href="#problem" aria-hidden="true"><span class="octicon octicon-link"></span></a>Problem</h2>
+<h2 id="problem">Problem</h2>
 <p>However, not everything works well with the Docker system since it lacks the final user interaction. This is a crucial consideration because it is what the final user will see. If the user is unable to detect or rapidly identify the errors in a package, the entire Action will be useless. Using the docker architecture, the action can only print the results in the log in text format, without allowing the results to be uploaded as an artifact file and shared with other steps/jobs in the workflow.</p>
 
-<h2 id="solution">
-<a class="anchor" href="#solution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Solution</h2>
+<h2 id="solution">Solution</h2>
 <p>Starting with this I searched for a solution to the problem and discovered that <code class="language-plaintext highlighter-rouge">actions/upload-artifact</code> allows to share the analysis findings with other jobs by publishing an artifact file. The <code class="language-plaintext highlighter-rouge">actions/upload-artifact</code> would be handy for RcppDeepState since it may be configured to upload the analyzed package’s ‘inst/testfiles’ folder, which contains the inputs as well as the Valgrind outputs of the RcppDeepState execution.</p>
 
 <p>The issue is that publishing an artifact file via the Docker system is a challenging operation. One possibility is to combine the present Docker system with a Composite Action to gain the benefits of both systems. Thus in this week of work(seventh week) I will integrate the existing docker system with a composite action. The primary action will be the composite one, and the docker action will be triggered by a composite step.</p>
 
-<hr>
+<hr />
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p><a href="https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/06/28/github-actions.html">RcppDeepState’s GitHub Action considerations</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/06/28/github-actions.html">RcppDeepState’s GitHub Action considerations</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p><a href="https://github.com/FabrizioSandri/RcppDeepState-action/pull/1">First prototype</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://github.com/FabrizioSandri/RcppDeepState-action/pull/1">First prototype</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

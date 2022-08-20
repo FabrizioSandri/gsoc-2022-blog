@@ -95,19 +95,10 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
-<li class="toc-entry toc-h2"><a href="#week-10">Week 10</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#reference">Reference</a></li>
-</ul>
-</li>
-</ul><h2 id="introduction">
-<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+    <h2 id="introduction">Introduction</h2>
 <p>This post is meant to be a reference for the work I’ve done during the tenth week.</p>
 
-<h2 id="week-10">
-<a class="anchor" href="#week-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 10</h2>
+<h2 id="week-10">Week 10</h2>
 <p>I have spent most of this week’s time improving the RcppDeepState Action and fixing the existing editable-functions of RcppDeepState.</p>
 
 <p>Regarding RcppDeepState-action:</p>
@@ -130,8 +121,7 @@ window.onload = wrap_img;
   <li>Removed the user prompt from the <code class="language-plaintext highlighter-rouge">deepstate_compile_generate_fun</code> and <code class="language-plaintext highlighter-rouge">deepstate_compile_checks_fun</code> functions. Prior to this update, these functions waited for user input in the case of a non-defined range or missing assert conditions, and asked the user whether or not to continue with the compilation of the test harness.</li>
 </ul>
 
-<h3 id="reference">
-<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h3>
+<h3 id="reference">Reference</h3>
 <p>Pull requests:</p>
 <ul>
   <li><a href="https://github.com/FabrizioSandri/RcppDeepState/pull/19">Harness unit test name</a></li>

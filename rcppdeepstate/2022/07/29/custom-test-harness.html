@@ -95,12 +95,7 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
-<li class="toc-entry toc-h2"><a href="#the-procedure">The procedure</a></li>
-<li class="toc-entry toc-h2"><a href="#example">Example</a></li>
-</ul><h2 id="introduction">
-<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+    <h2 id="introduction">Introduction</h2>
 <p>The list of supported datatypes maintained by RcppDeepState is used to automatically create test harnesses for functions whose supported datatypes fall within this list. This list was created using a frequency table of the top 100 Rcpp types found in CRAN packages<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. The complete list of supported datatypes is provided below:</p>
 <ul>
   <li><code class="language-plaintext highlighter-rouge">int</code></li>
@@ -122,14 +117,11 @@ Failed to create testharness for 1 functions in the package - unsupported_dataty
 <p>This just indicates that the automatic procedure to create a test harness cannot be used, not that your function cannot be analyzed at all. The test harness must therefore be manually created together with its directory structure, and it must then be examined.
 I’ll explain this procedure in this blog article.</p>
 
-<h2 id="the-procedure">
-<a class="anchor" href="#the-procedure" aria-hidden="true"><span class="octicon octicon-link"></span></a>The procedure</h2>
+<h2 id="the-procedure">The procedure</h2>
 <p>RcppDeepState involves two steps:</p>
 <ul>
-  <li>
-<em>generator</em>: automatically generates the harness and all the inputs</li>
-  <li>
-<em>runner</em>: analyze the package running each function given the inputs of the generator step</li>
+  <li><em>generator</em>: automatically generates the harness and all the inputs</li>
+  <li><em>runner</em>: analyze the package running each function given the inputs of the generator step</li>
 </ul>
 
 <p>The generator step cannot be used for a function whose inputs are not supported, so we must manually run the steps to construct the directory structure for this function. This can be done using the existing RcppDeepState functions.</p>
@@ -197,8 +189,7 @@ I’ll explain this procedure in this blog article.</p>
 </span><span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">deepstate_harness_analyze_pkg</span><span class="p">(</span><span class="n">package_location</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<h2 id="example">
-<a class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+<h2 id="example">Example</h2>
 <p>I want to provide an example of the <code class="language-plaintext highlighter-rouge">unsupported_datatype</code> function that can be found in the testSAN package<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>. This function uses a <code class="language-plaintext highlighter-rouge">LogicalVector</code> as its single parameter, thus RcppDeepState will skip this function from the analysis.</p>
 
 <p>To solve this I followed all the steps mentioned above. First of all I ran the <code class="language-plaintext highlighter-rouge">deepstate_create_makefile</code> function, remembering that I had to define the missing variables(<code class="language-plaintext highlighter-rouge">package_location</code> and <code class="language-plaintext highlighter-rouge">function_name</code>):</p>
@@ -269,15 +260,15 @@ I’ll explain this procedure in this blog article.</p>
 
 <p>If you print the <code class="language-plaintext highlighter-rouge">result</code> table you will find that <code class="language-plaintext highlighter-rouge">unsupported_datatype</code> has finally been tested with RcppDeepState.</p>
 
-<hr>
+<hr />
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p><a href="https://github.com/FabrizioSandri/RcppDeepState/issues/10#issuecomment-1179190239">Top 100 Rcpp types found in CRAN packages</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://github.com/FabrizioSandri/RcppDeepState/issues/10#issuecomment-1179190239">Top 100 Rcpp types found in CRAN packages</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p><a href="https://github.com/FabrizioSandri/RcppDeepState/blob/master/inst/testpkgs/testSAN/src/unsupported_datatype.cpp">unsupported_datatype function</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://github.com/FabrizioSandri/RcppDeepState/blob/master/inst/testpkgs/testSAN/src/unsupported_datatype.cpp">unsupported_datatype function</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

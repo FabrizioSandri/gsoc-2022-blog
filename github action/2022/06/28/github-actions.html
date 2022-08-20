@@ -95,20 +95,7 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#github-actions">GitHub Actions</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#github-actions-and-rcppdeepstate">Github Actions and RcppDeepState</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#considerations">Considerations</a></li>
-<li class="toc-entry toc-h4"><a href="#development">Development</a></li>
-</ul>
-</li>
-</ul><h2 id="introduction">
-<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+    <h2 id="introduction">Introduction</h2>
 <p>Continuous integration and Continuous delivery, also called CI/CD, are two useful methodologies that every developer have hear about. 
 This terms refers to the possibility of continuously perform some task with your code in an automated way.</p>
 
@@ -116,19 +103,16 @@ This terms refers to the possibility of continuously perform some task with your
 
 <p>These two methodologies, can be implemented in any Git repository using tools such as GitHub Actions and TravisCI. I will focus only on GitHub Actions, which is a feature implemented by the GitHub platform, which allows to create complex workflows in any kind of repository.</p>
 
-<h4 id="github-actions">
-<a class="anchor" href="#github-actions" aria-hidden="true"><span class="octicon octicon-link"></span></a>GitHub Actions</h4>
+<h4 id="github-actions">GitHub Actions</h4>
 <p>GitHub actions are fully integrated with GitHub and can respond to any specified GitHub event (new issue, pull request, push on a branch). This is a fully automated engine and GitHub Actions comes with a lot of pre-defined workflows that are provided by communities. A powerful functionality provided by GitHub actions is the possibility to run the code on different operating systems, such as Linux, Windows, macOS and Docker containers.</p>
 
 <p>GitHub Actions are composed of three components: an event, a workflow and an action. Everything start with an event that triggers the execution of a workflow, which is composed of different jobs to compute some operations. Actions instead are reusable units of code that are called within a workflow with the <code class="language-plaintext highlighter-rouge">with</code> parameter.</p>
 
-<h2 id="github-actions-and-rcppdeepstate">
-<a class="anchor" href="#github-actions-and-rcppdeepstate" aria-hidden="true"><span class="octicon octicon-link"></span></a>Github Actions and RcppDeepState</h2>
+<h2 id="github-actions-and-rcppdeepstate">Github Actions and RcppDeepState</h2>
 <p>In the previous posts, I demonstrated the efficacy of RcppDeepState in detecting issues in Rcpp-based libraries. Based on this, in order to make it easier for developers to execute RcppDeepState on any R package hosted in a GitHub repository, it will be useful to integrate RcppDeepState inside a GitHub Action.
 This is exactly the main goal of my Google Summer Of Code project, but before getting started on the development of the GitHub Action, there are a few things to take into account.</p>
 
-<h4 id="considerations">
-<a class="anchor" href="#considerations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Considerations</h4>
+<h4 id="considerations">Considerations</h4>
 <p>Here is a list of considerations that will help me during the development of the RcppDeepState GitHub Action.</p>
 <ol>
   <li>The first thing I need to take into account is the choice of the architecture for the GitHub Action. According to the GitHub documentation<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> there are three ways to create an Action:
@@ -149,17 +133,16 @@ This is exactly the main goal of my Google Summer Of Code project, but before ge
   </li>
 </ol>
 
-<h4 id="development">
-<a class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h4>
+<h4 id="development">Development</h4>
 <p>As mentioned in the Considerations section, this GitHub Action will be entirely developed in a separate repository that can be found at the following link: <a href="https://github.com/FabrizioSandri/RcppDeepState-action">RcppDeepState-action</a>.</p>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p><a href="https://docs.github.com/en/actions/creating-actions">GitHub documentation: Creating actions</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://docs.github.com/en/actions/creating-actions">GitHub documentation: Creating actions</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p><a href="https://docs.github.com/en/actions/creating-actions/about-custom-actions#choosing-a-location-for-your-action">GitHub documentation: Choosing a location for your action</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://docs.github.com/en/actions/creating-actions/about-custom-actions#choosing-a-location-for-your-action">GitHub documentation: Choosing a location for your action</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

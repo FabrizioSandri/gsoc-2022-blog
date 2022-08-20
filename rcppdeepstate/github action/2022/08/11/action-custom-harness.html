@@ -98,17 +98,7 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
-<li class="toc-entry toc-h2"><a href="#custom-test-harness">Custom test harness</a></li>
-<li class="toc-entry toc-h2"><a href="#provide-the-test-harness-to-the-action">Provide the test harness to the Action</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#example">Example</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
-</ul><h2 id="introduction">
-<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+    <h2 id="introduction">Introduction</h2>
 <p>Sometimes it can happen that a function in your package cannot be analyzed
 because of some datatypes falling outside of the set of supported one. 
 In this scenario, RcppDeepState cannot create the test harness automatically, 
@@ -117,8 +107,7 @@ thus the user must supply it manually.</p>
 <p>This blog post is meant to be a guide for the users who wants to provide a 
 custom test harness to the RcppDeepState GitHub Action.</p>
 
-<h2 id="custom-test-harness">
-<a class="anchor" href="#custom-test-harness" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom test harness</h2>
+<h2 id="custom-test-harness">Custom test harness</h2>
 <p>Creating a custom test harness is a difficult operation that must be completed appropriately by adhering to the general test harness structure outlined in the dedicated blog post<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. If the test harness is not properly designed, RcppDeepState will not be able to locate and perform the tests.</p>
 
 <p>Before continuing to read this post, you should first read about the test harness structure that RcppDeepState accepts. The following snippet of code contains the harness file’s structure that the user must follow to correctly operate with RcppDeepState. All of this has already been mentioned in the the dedicated blog post<sup id="fnref:1:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</p>
@@ -174,15 +163,13 @@ custom test harness to the RcppDeepState GitHub Action.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h2 id="provide-the-test-harness-to-the-action">
-<a class="anchor" href="#provide-the-test-harness-to-the-action" aria-hidden="true"><span class="octicon octicon-link"></span></a>Provide the test harness to the Action</h2>
+<h2 id="provide-the-test-harness-to-the-action">Provide the test harness to the Action</h2>
 <p>Once you have created a custom test harness for your function you can provide it to the RcppDeepState GitHub Action by simply creating a subdirectory inside your package’s <code class="language-plaintext highlighter-rouge">/inst/testfiles</code>, named as the function that is being analyzed. 
 This folder will  contain the harness file that should be named as the function being analyzed plus the <code class="language-plaintext highlighter-rouge">_DeepState_TestHarness.cpp</code> suffix. RcppDeepState will look for existing test harness files and use them instead of generating new ones before performing the analysis step.</p>
 
 <p>While doing so, keep in mind the naming standards allowed by RcppDeepState; otherwise, unexpected problems may occur.</p>
 
-<h4 id="example">
-<a class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h4>
+<h4 id="example">Example</h4>
 <p>Assume that a package stored in the root of a repository has a function named <code class="language-plaintext highlighter-rouge">unsupported_datatype</code> that needs to be analyzed with RcppDeepState. Suppose this function has a parameter whose type falls out of the supported datatypes: the <code class="language-plaintext highlighter-rouge">Rcpp::LogicalVector</code> datatype.</p>
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;Rcpp.h&gt;</span><span class="cp">
 </span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
@@ -199,17 +186,16 @@ This folder will  contain the harness file that should be named as the function 
 <code class="language-plaintext highlighter-rouge">/inst/testfiles/unsupported_datatype/unsupported_datatype_DeepState_TestHarness.cpp</code> 
 location (relative to the repository’s root).</p>
 
-<h2 id="conclusion">
-<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 <p>We saw in this post how to pass a manually created test harness to RcppDeepState-action.
 This RcppDeepState feature allows developers to analyze functions with unsupported datatypes as arguments.</p>
 
-<hr>
+<hr />
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p><a href="https://fabriziosandri.github.io/gsoc-2022-blog/rcppdeepstate/2022/07/29/custom-test-harness.html">Write a custom test harness for functions with unsupported datatypes</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a> <a href="#fnref:1:1" class="reversefootnote" role="doc-backlink">↩<sup>2</sup></a></p>
+      <p><a href="https://fabriziosandri.github.io/gsoc-2022-blog/rcppdeepstate/2022/07/29/custom-test-harness.html">Write a custom test harness for functions with unsupported datatypes</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:1:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
   </ol>
 </div>

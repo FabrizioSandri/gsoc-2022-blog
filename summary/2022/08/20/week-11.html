@@ -95,27 +95,11 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
-<li class="toc-entry toc-h2"><a href="#week-11">Week 11</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#new-look-of-the-actions-comment">New look of the Action’s comment</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#rcppdeepstate-report">RcppDeepState Report</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#analyzed-functions-summary">Analyzed functions summary</a></li>
-<li class="toc-entry toc-h3"><a href="#report-details">Report details</a></li>
-<li class="toc-entry toc-h3"><a href="#reference">Reference</a></li>
-</ul>
-</li>
-</ul><h2 id="introduction">
-<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+    <h2 id="introduction">Introduction</h2>
 <p>This post is meant to be a reference for the work I’ve done during the eleventh
 week.</p>
 
-<h2 id="week-11">
-<a class="anchor" href="#week-11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 11</h2>
+<h2 id="week-11">Week 11</h2>
 <p>This week I have been working ob both RcppDeepState and it’s GitHub Action.</p>
 
 <p>Starting with RcppDeepState:</p>
@@ -150,13 +134,11 @@ that uploads an artifact file that contains the whole report file if it has been
 truncated.</li>
 </ul>
 
-<h3 id="new-look-of-the-actions-comment">
-<a class="anchor" href="#new-look-of-the-actions-comment" aria-hidden="true"><span class="octicon octicon-link"></span></a>New look of the Action’s comment</h3>
+<h3 id="new-look-of-the-actions-comment">New look of the Action’s comment</h3>
 <p>This is the new look of the GitHub comment after the updates of this week.</p>
 
 <div class="p-2" style="border: 1px solid gray; overflow-x: auto;">
-    <h2 class="m-1">
-<a class="anchor" href="#rcppdeepstate-report" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/FabrizioSandri/RcppDeepState">RcppDeepState</a> Report</h2>
+    <h2 class="m-1"><a href="https://github.com/FabrizioSandri/RcppDeepState">RcppDeepState</a> Report</h2>
     <table>
     <thead>
         <tr>
@@ -176,14 +158,13 @@ truncated.</li>
         <td>
             <details>
             <summary>Test code</summary>
-            <pre>testlist &lt;- list(data_vec = c(4.95282670985293e+269, 9.19220261345616e+228, 9.76446051871464e-227, 3.44002757211463e+142, 3.44564622360808e+125, Inf, -6.84590386509538e-154, 3.40246022599512e+269, -1.28923819757614e-165, 2.81518964059233e+167, -1.25531632864596e-287, -2.67427599032549e-248, 3.34588187587734e-119, -1.23551154415627e-21, -1.02610805187601e-109, 4.16940122332875e+269, -1.78387023887419e+248, -1.05722072744111e+98, -4.76115744068632e+183, -3.88035302297988e+101, -1.56937482455912e-56, NA, -4.75822295269467e+95, 1.98207210521439e-28, -1.15749005895586e-67, 1.50064938648988e-160, Inf, 1.13915958031741e+26, Inf, Inf, -5.34218289504947e-223, -4.2465118855095e-179, 5.50632255056954e-235, 1.39476247744266e+75, 1.69641978386394e-232, -1.77675561435822e-297, 4.25467706108586e-23, 4.89194157273472e+80, -2.27196098452465e-154, 3.08839698258598e+192, 2.35589726999274e-123, -2.63763169515399e+87, -3.19378705311954e+155, -3.74038104538462e-105, -3.16795961327089e+80, 9.14978341696139e+137, -1.50288014544269e-23, 1.43738183421206e-204, -2.35599803385513e-61, -2.99448212415941e+198, -4.0142655383189e+295, 1.61771792417167e+263, 0), weight_vec = c(2.59911756272486e+111, 1.23635737106356e-189, 1.53741044740229e-52, -4.41781541766863e+239, -6.40134612106056e-244, 1.22932559861284e-178, 9.45677812109935e+246, -6.03796060663925e+205, -1.90357180711086e-121, 6.15125704486057e+284, -2.75478977649574e+137, 6.11004203699546e+278, 3.40593845702388e+296, -3.91628109029268e-125, -1.85820166555954e-202, 3.3111091636182e-114, -4.91423732728992e-256, -3.13719918528368e+206, -2.76369409104372e-199, -1.24023111984261e-126, -2.4680069962022e+156, -3.00037236174766e-86, 2.65598591262111e-41, -6.74802436337638e+177, 1.09260531554511e+90, -1.48021774692267e+88, 20068460903947, -9.56718241162573e-150))<br>result &lt;- do.call(binsegRcpp:::cum_median_interface, testlist)</pre>
+            <pre>testlist &lt;- list(data_vec = c(4.95282670985293e+269, 9.19220261345616e+228, 9.76446051871464e-227, 3.44002757211463e+142, 3.44564622360808e+125, Inf, -6.84590386509538e-154, 3.40246022599512e+269, -1.28923819757614e-165, 2.81518964059233e+167, -1.25531632864596e-287, -2.67427599032549e-248, 3.34588187587734e-119, -1.23551154415627e-21, -1.02610805187601e-109, 4.16940122332875e+269, -1.78387023887419e+248, -1.05722072744111e+98, -4.76115744068632e+183, -3.88035302297988e+101, -1.56937482455912e-56, NA, -4.75822295269467e+95, 1.98207210521439e-28, -1.15749005895586e-67, 1.50064938648988e-160, Inf, 1.13915958031741e+26, Inf, Inf, -5.34218289504947e-223, -4.2465118855095e-179, 5.50632255056954e-235, 1.39476247744266e+75, 1.69641978386394e-232, -1.77675561435822e-297, 4.25467706108586e-23, 4.89194157273472e+80, -2.27196098452465e-154, 3.08839698258598e+192, 2.35589726999274e-123, -2.63763169515399e+87, -3.19378705311954e+155, -3.74038104538462e-105, -3.16795961327089e+80, 9.14978341696139e+137, -1.50288014544269e-23, 1.43738183421206e-204, -2.35599803385513e-61, -2.99448212415941e+198, -4.0142655383189e+295, 1.61771792417167e+263, 0), weight_vec = c(2.59911756272486e+111, 1.23635737106356e-189, 1.53741044740229e-52, -4.41781541766863e+239, -6.40134612106056e-244, 1.22932559861284e-178, 9.45677812109935e+246, -6.03796060663925e+205, -1.90357180711086e-121, 6.15125704486057e+284, -2.75478977649574e+137, 6.11004203699546e+278, 3.40593845702388e+296, -3.91628109029268e-125, -1.85820166555954e-202, 3.3111091636182e-114, -4.91423732728992e-256, -3.13719918528368e+206, -2.76369409104372e-199, -1.24023111984261e-126, -2.4680069962022e+156, -3.00037236174766e-86, 2.65598591262111e-41, -6.74802436337638e+177, 1.09260531554511e+90, -1.48021774692267e+88, 20068460903947, -9.56718241162573e-150))<br />result &lt;- do.call(binsegRcpp:::cum_median_interface, testlist)</pre>
             </details>
         </td>
         </tr>
     </tbody>
     </table>
-    <h3 id="analyzed-functions-summary">
-<a class="anchor" href="#analyzed-functions-summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Analyzed functions summary</h3>
+    <h3 id="analyzed-functions-summary">Analyzed functions summary</h3>
     <table>
     <thead>
         <tr>
@@ -210,18 +191,15 @@ truncated.</li>
         </tr>
     </tbody>
     </table>
-    <h3 id="report-details">
-<a class="anchor" href="#report-details" aria-hidden="true"><span class="octicon octicon-link"></span></a>Report details</h3>
+    <h3 id="report-details">Report details</h3>
     <ul>
-    <li>Report generated by: <a href="https://github.com/tdhock/binsegRcpp/commit/32d09699bc55c32c09a70b8580b21c335791fb81">32d0969</a>
-</li>
+    <li>Report generated by: <a href="https://github.com/tdhock/binsegRcpp/commit/32d09699bc55c32c09a70b8580b21c335791fb81">32d0969</a></li>
     <li>Inputs generator seed: 5</li>
     </ul>
 
 </div>
 
-<h3 id="reference">
-<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h3>
+<h3 id="reference">Reference</h3>
 <p>Pull requests:</p>
 <ul>
   <li><a href="https://github.com/FabrizioSandri/RcppDeepState/pull/20">Editable functions</a></li>

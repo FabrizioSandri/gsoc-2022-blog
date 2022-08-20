@@ -98,35 +98,11 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h1"><a href="#advanced-fuzz-testing">Advanced fuzz testing</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#valgrind-introduction">Valgrind introduction</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#usage">Usage</a></li>
-<li class="toc-entry toc-h3"><a href="#sample-usage">Sample usage</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#deepstate-and-valgrind">DeepState and Valgrind</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#use-case-example">Use case example</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#test-with-valgrind">Test with Valgrind</a></li>
-<li class="toc-entry toc-h4"><a href="#test-with-valgrind-and-deepstate">Test with Valgrind and DeepState</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
-</ul>
-</li>
-</ul><h1 id="advanced-fuzz-testing">
-<a class="anchor" href="#advanced-fuzz-testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advanced fuzz testing</h1>
+    <h1 id="advanced-fuzz-testing">Advanced fuzz testing</h1>
 <p>In the previous posts we have seen how to use DeepState to find simple errors in programs. The problem of the basic fuzz testing approach is that it does not allow us to detect more subtle issues, such as memory faults.
 In this article we introduce and explain a more advanced fuzz testing approach using the Valgrind memcheck tool and DeepState</p>
 
-<h2 id="valgrind-introduction">
-<a class="anchor" href="#valgrind-introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Valgrind introduction</h2>
+<h2 id="valgrind-introduction">Valgrind introduction</h2>
 <p>Valgrind is a debugging and profiling tool for Linux applications. The Valgrind distribution comes with a set of useful tools: a thread error detector (Helgrind), a cache profiler (Cachegrind), a heap profiler(Massif), a memory problem analyzer (Memcheck), and other tools are included in the Valgrind suite <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. For our purpose and interest we will focus uniquely on the Memcheck tool. This tool allows you to do an advanced memory analysis to identify two types of memory errors:</p>
 <ul>
   <li>Memory leaks</li>
@@ -135,12 +111,10 @@ In this article we introduce and explain a more advanced fuzz testing approach u
 
 <p>The first is related to missed frees: a software allocates memory in the heap dynamically and then forgets to free it. The latter is caused by more subtle errors, such as reading or writing from uninitialized memory locations: a program writes some bytes in a memory location that has not been initialized. Valgrind has a module called Memcheck that can help you find these kinds of issues.</p>
 
-<h3 id="usage">
-<a class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
+<h3 id="usage">Usage</h3>
 <p>With some simple steps we can perform an advanced memory analysis over a compiled binary. Before the analysis can take place, in order to have as much information as possible from the analysis results such as the error line number, it’s convenient to compile the program by passing the <code class="language-plaintext highlighter-rouge">-g</code> parameter to  the <code class="language-plaintext highlighter-rouge">g++</code> compiler. This option will produce more debugging information that will be included in the resulting binary.</p>
 
-<h3 id="sample-usage">
-<a class="anchor" href="#sample-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample usage</h3>
+<h3 id="sample-usage">Sample usage</h3>
 <p>The following is a description of the analysis procedure for a basic C++ program that allocates but does not release memory bytes. The program is reported in the following code snippet. As you can see the malloc invocation isn’t followed by a free, thus what we are expecting from Valgrind is a warning from the Memcheck tool about the missing free.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;cstdlib&gt;</span><span class="cp">
@@ -194,14 +168,12 @@ In this article we introduce and explain a more advanced fuzz testing approach u
 
 <p>The error in fact comes from the call to the <code class="language-plaintext highlighter-rouge">malloc</code> function that allocates <code class="language-plaintext highlighter-rouge">5 * sizeof(int) = 5 * 4 bytes = 20</code> contiguous bytes in heap but doesn’t free them. Note that the size of an integer is compiler and architecture dependent: in my case the size of a single int in memory is 4 bytes.</p>
 
-<h2 id="deepstate-and-valgrind">
-<a class="anchor" href="#deepstate-and-valgrind" aria-hidden="true"><span class="octicon octicon-link"></span></a>DeepState and Valgrind</h2>
+<h2 id="deepstate-and-valgrind">DeepState and Valgrind</h2>
 <p>Let’s take a closer look at how Valgrind may be used in conjunction with the fuzzing approaches described in my earlier postings. As previously stated, basic fuzz testing is restricted in its ability to detect just certain types of programming problems. Consider combining the power of Valgrind memory checks with the benefits of fuzz testing. That is precisely what we will explore in this section.</p>
 
 <p>Fuzz testing programs to find memory safety errors using Valgrind and DeepState allows to increase the probability of finding subtle errors.</p>
 
-<h3 id="use-case-example">
-<a class="anchor" href="#use-case-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use case example</h3>
+<h3 id="use-case-example">Use case example</h3>
 
 <p>Assume you’re writing a function that accepts a pointer to the beginning of a string, copies it into a new heap-allocated string, and then frees it. Consider that while developing this function, the developer forgot about the size of the source string. A careful reader would have caught the mistake and addressed the problem, however we want to understand how Valgrind with the auxiliary of DeepState could quickly find the problem. As you may have seen, the issue is caused by two factors:</p>
 <ul>
@@ -230,8 +202,7 @@ In this article we introduce and explain a more advanced fuzz testing approach u
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="test-with-valgrind">
-<a class="anchor" href="#test-with-valgrind" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test with Valgrind</h4>
+<h4 id="test-with-valgrind">Test with Valgrind</h4>
 <p>Now let’s consider to use Valgrind to check for any memory issue in the above program. The developer can try a lot of different options, forgetting about the border case(string greater than 20).</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>valgrind ./program 12345678
 valgrind ./program hello world
@@ -259,8 +230,7 @@ valgrind ./program <span class="nb">test</span>
 <p>As you can see, it seems like everything is working fine, no error, no leak.
 However the developer missed to execute the border case. What we can learn here is that the greater the number of executions with varied inputs, the greater the chance of discovering subtle errors.</p>
 
-<h4 id="test-with-valgrind-and-deepstate">
-<a class="anchor" href="#test-with-valgrind-and-deepstate" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test with Valgrind and DeepState</h4>
+<h4 id="test-with-valgrind-and-deepstate">Test with Valgrind and DeepState</h4>
 <p>Let’s integrate DeepState with the previous code fragment. First of all we remove the main function and we create a <code class="language-plaintext highlighter-rouge">TEST</code> function. This is the Test Harness creation phase, discussed in the previous posts<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;cstdlib&gt;</span><span class="cp">
@@ -335,20 +305,19 @@ INFO: Done fuzzing! Ran 1 tests (1 tests/second) with 0 failed/1 passed/0 abando
 
 <p>This time the results are quite different: Valgrind with the auxiliary of DeepState was able to discover 6 errors from 3 different contexts. As we can see from the analysis of Valgrind (I have truncated the analysis to only the first error) the error is caused by the <code class="language-plaintext highlighter-rouge">memmove</code> invocated by <code class="language-plaintext highlighter-rouge">memcpy</code> in the program ad line <code class="language-plaintext highlighter-rouge">11</code>.</p>
 
-<h2 id="conclusion">
-<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 <p>Using only one tool is not always the best approach to find subtle programming errors. In fact in this article we discussed a advanced technique to perform a more sophisticated analysis. By combining fuzz testing from DeepState with memory analysis from Valgrind we were able to address more errors than the one we could have discovered by using a single technique.</p>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p><a href="https://valgrind.org/info/tools.html">Valgrind tools</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://valgrind.org/info/tools.html">Valgrind tools</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p><a href="https://cwe.mitre.org/data/definitions/122.html">Heap overflow</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://cwe.mitre.org/data/definitions/122.html">Heap overflow</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:3" role="doc-endnote">
-      <p><a href="https://fabriziosandri.github.io/gsoc-2022-blog/deepstate/fuzz/c++/2022/05/25/about-deepstate.html">Test Harness creation guide</a> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p><a href="https://fabriziosandri.github.io/gsoc-2022-blog/deepstate/fuzz/c++/2022/05/25/about-deepstate.html">Test Harness creation guide</a> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
