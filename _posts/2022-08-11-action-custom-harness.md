@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: Guide to provide RcppDeepState-action a custom test harness for a function that cannot be analyzed.
 badges: true

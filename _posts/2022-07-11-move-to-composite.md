@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: Considerations review
 badges: true

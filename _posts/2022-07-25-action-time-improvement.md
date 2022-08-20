@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: Description of the steps that I will follow this week to improve the GitHub action's execution time
 badges: true

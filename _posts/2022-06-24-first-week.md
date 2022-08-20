@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: Pull requests and changes made in the Community Bonding Period and in the first week
 badges: true

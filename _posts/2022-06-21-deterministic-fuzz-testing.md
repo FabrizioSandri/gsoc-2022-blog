@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: Make DeepState fuzz testing with Rcpp, deterministic. Solution implemented in the pull request \#6
 badges: true

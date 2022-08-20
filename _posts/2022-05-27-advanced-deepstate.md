@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: An advanced fuzz testing description using DeepState in conjunction with Valgrind
 badges: true

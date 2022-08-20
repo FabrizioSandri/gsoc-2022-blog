@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: A quick introduction to DeepState fuzzing library 
 badges: true

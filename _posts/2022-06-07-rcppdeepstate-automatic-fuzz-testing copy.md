@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: An quick overview of package fuzz testing using RcppDeepState 
 badges: true

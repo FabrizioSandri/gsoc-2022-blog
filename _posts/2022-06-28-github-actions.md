@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: An introduction to GitHub Actions and some consideration before writing the GitHub Action for RcppDeepState
 badges: true

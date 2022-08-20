@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: A detailed description of debugging Rcpp functions outside of the R environment using Valgrind
 badges: true
