@@ -294,13 +294,19 @@ Here are the links to the results:
 * [jmotif-R results](https://github.com/FabrizioSandri/jmotif-R/pull/1)
 
 ## Future work
-As previously said, creating 115 repositories will result in a in a massive
-generation of repositories within my GitHub account. One possible solution is to
-create a Github Organization and instruct the above script to fork the 
-repositories to a specific organization rather than to my GitHub account. This
-can be accomplished by passing an extra argument to the GitHub REST API: the 
-`organization` parameter; this parameter must be set to the organization's name.
-The rest of the code will be left unchanged. 
+Creating 115 repositories, as previously said, will result in a huge generation
+of repositories within my GitHub account. This is not a problem solely because 
+of the number of repositories, but if I need to remove all of them, I will 
+undoubtedly have to write a script to do so; this can be a dangerous task if 
+done in my current working environment (my user profile) because I may
+accidentally specify the incorrect condition and end up deleting the wrong
+repositories. 
+
+One possible solution is to create a Github Organization and instruct the above 
+script to fork the repositories to a specific organization rather than to my 
+GitHub account. This can be accomplished by passing an extra argument to the 
+GitHub REST API: the `organization` parameter; this parameter must be set to the
+organization's name. The rest of the code will be left unchanged. 
 
 ```R
 fork_endpoint <- paste0("POST /repos/", repo_full_name, "/forks")
