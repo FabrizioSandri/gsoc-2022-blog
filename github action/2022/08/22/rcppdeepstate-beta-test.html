@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Beta test RcppDeepState-action on GitHub hosted CRAN packages | GSOC 2022 RcppDeepState</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Beta test RcppDeepState-action on GitHub hosted CRAN packages" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="RcppDeepState-action beta test on other packages" />
+<meta property="og:description" content="RcppDeepState-action beta test on other packages" />
+<link rel="canonical" href="https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/08/22/rcppdeepstate-beta-test.html" />
+<meta property="og:url" content="https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/08/22/rcppdeepstate-beta-test.html" />
+<meta property="og:site_name" content="GSOC 2022 RcppDeepState" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-08-22T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Beta test RcppDeepState-action on GitHub hosted CRAN packages" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-08-22T00:00:00-05:00","datePublished":"2022-08-22T00:00:00-05:00","description":"RcppDeepState-action beta test on other packages","headline":"Beta test RcppDeepState-action on GitHub hosted CRAN packages","mainEntityOfPage":{"@type":"WebPage","@id":"https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/08/22/rcppdeepstate-beta-test.html"},"url":"https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/08/22/rcppdeepstate-beta-test.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/gsoc-2022-blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://fabriziosandri.github.io/gsoc-2022-blog/feed.xml" title="GSOC 2022 | RcppDeepState" /><link rel="shortcut icon" type="image/x-icon" href="/gsoc-2022-blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/gsoc-2022-blog/">GSOC 2022 | RcppDeepState</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/gsoc-2022-blog/search/">Search</a><a class="page-link" href="/gsoc-2022-blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Beta test RcppDeepState-action on GitHub hosted CRAN packages</h1><p class="page-description">RcppDeepState-action beta test on other packages</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-08-22T00:00:00-05:00" itemprop="datePublished">
+        Aug 22, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/gsoc-2022-blog/categories/#GitHub Action">GitHub Action</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="introduction">Introduction</h2>
+<p>My mentor has assigned me an interesting task to begin working on this week: 
+test the current RcppDeepState GitHub Action on GitHub-hosted Rcpp-based 
+packages. Akhilla, the previous RcppDeepState maintainer, had already conducted 
+a similar task, however this was done locally rather than in the package 
+repository. Here’s a list of all the <a href="https://akhikolla.github.io./packages-folders/">Rcpp-based packages where RcppDeepState found issues</a><sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</p>
+
+<p>Now that RcppDeepState has been integrated with GitHub action, we can test more 
+packages stored on GitHub; all we have to do is fork the original repositories, 
+setup the action within them, and then make a pull request so that the action 
+returns a comment with the analysis result. The main advantages of using 
+RcppDeepState-action inside a repository are that it allows to:</p>
+<ul>
+  <li>dynamically check for issues inside packages using continuous integration;</li>
+  <li>reduce the risk of code level bugs that can compromise the entire package;</li>
+  <li>improve the quality of the final package by making it easier to detect subtler
+bugs, receiving quick feedbacks and alerts if an error is detected;</li>
+</ul>
+
+<h2 id="the-problem">The problem</h2>
+<p>At the time of writing, CRAN lists 18493 packages, 312 of which have problems, 
+according to Akhilla’s report<sup id="fnref:1:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. Given this list of packages, the question is 
+whether it is feasible to determine if a package is hosted on GitHub. If so, 
+can RcppDeepState be run on this repository?</p>
+
+<p>To begin with, the answer to the first question is yes, and my mentor 
+Dr.Toby Dylan Hocking supplied me with a fantastic method that allows me to 
+find the GitHub repository of a package by evaluating the package’s metadata 
+available on CRAN.
+This method is based on locating the <code class="language-plaintext highlighter-rouge">https://github.com</code> prefix inside the 
+metadata of the package. More information on this technique is available in the
+corresponding blog post<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>.</p>
+
+<p>The answer to the second question is affirmative; once we have a link to the 
+repository, we can simply fork it, initialize RcppDeepState-action using the 
+<code class="language-plaintext highlighter-rouge">RcppDeepState::ci_setup()</code> method, and submit a pull request; RcppDeepState’s 
+report will be displayed as a comment within the pull request. The problem here 
+is that, given the number of packages listed in the previous step, doing these 
+steps one by one is impractical; consequently, in this post, I propose a method 
+for automating this process.</p>
+
+<h2 id="solution">Solution</h2>
+<p>The solution makes use of four libraries:</p>
+<ul>
+  <li><em>gh</em><sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>: a minimal client to access the REST API of GitHub;</li>
+  <li><em>git2r</em><sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>: an interface to the <code class="language-plaintext highlighter-rouge">libgit2</code> library, which provides access to 
+Git repositories with some basic commands;</li>
+  <li><em>data.table</em><sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>: a library to aggregate large data and run fast 
+operations;</li>
+  <li><em>RcppDeepState</em><sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>: a package to fuzz test your R library’s C++ code in order 
+to find more subtle bugs like memory leaks or even more general memory errors.</li>
+</ul>
+
+<h3 id="steps">Steps</h3>
+<p>The first step is to import the required libraries and get the GitHub personal 
+access token (PAT) stored in an environment variable called <code class="language-plaintext highlighter-rouge">GITHUB_PAT</code> in my 
+case. This token will be used to authorize the push of local commits to a 
+repository’s remote branch. To generate this token, you can follow the 
+instructions provided by GitHub<sup id="fnref:7" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="s2">"gh"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"git2r"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"RcppDeepState"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"data.table"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">cred</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cred_token</span><span class="p">(</span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"GITHUB_PAT"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Given a <code class="language-plaintext highlighter-rouge">pkg.repos</code> data table produced by following the steps specified in 
+Dr.Toby Dylan Hocking’s blog post<sup id="fnref:2:1" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, the implementation of the automatic 
+fork/pull-request process mentioned above is described in the next steps.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">pkg.repos</span><span class="w">
+          </span><span class="n">Package</span><span class="w">                                  </span><span class="n">repo.url</span><span class="w">
+  </span><span class="m">1</span><span class="o">:</span><span class="w"> </span><span class="n">humaniformat</span><span class="w"> </span><span class="n">https</span><span class="o">://</span><span class="n">github.com</span><span class="o">/</span><span class="n">ironholds</span><span class="o">/</span><span class="n">humaniformat</span><span class="w">
+  </span><span class="m">2</span><span class="o">:</span><span class="w">       </span><span class="n">jmotif</span><span class="w">        </span><span class="n">https</span><span class="o">://</span><span class="n">github.com</span><span class="o">/</span><span class="n">jMotif</span><span class="o">/</span><span class="n">jmotif</span><span class="o">-</span><span class="n">R</span><span class="w">
+  </span><span class="m">3</span><span class="o">:</span><span class="w">     </span><span class="n">olctools</span><span class="w">     </span><span class="n">https</span><span class="o">://</span><span class="n">github.com</span><span class="o">/</span><span class="n">Ironholds</span><span class="o">/</span><span class="n">olctools</span><span class="w">
+  </span><span class="m">4</span><span class="o">:</span><span class="w">  </span><span class="n">RcppDynProg</span><span class="w">  </span><span class="n">https</span><span class="o">://</span><span class="n">github.com</span><span class="o">/</span><span class="n">WinVector</span><span class="o">/</span><span class="n">RcppDynProg</span><span class="w">
+  </span><span class="m">5</span><span class="o">:</span><span class="w">      </span><span class="n">BWStest</span><span class="w">     </span><span class="n">https</span><span class="o">://</span><span class="n">github.com</span><span class="o">/</span><span class="n">shabbychef</span><span class="o">/</span><span class="n">BWStest</span><span class="w">
+ </span><span class="o">---</span><span class="w">                                                       
+</span><span class="m">111</span><span class="o">:</span><span class="w">       </span><span class="n">tweenr</span><span class="w">       </span><span class="n">https</span><span class="o">://</span><span class="n">github.com</span><span class="o">/</span><span class="n">thomasp85</span><span class="o">/</span><span class="n">tweenr</span><span class="w">
+</span><span class="m">112</span><span class="o">:</span><span class="w">         </span><span class="n">uwot</span><span class="w">        </span><span class="n">https</span><span class="o">://</span><span class="n">github.com</span><span class="o">/</span><span class="n">jlmelville</span><span class="o">/</span><span class="n">uwot</span><span class="w">
+</span><span class="m">113</span><span class="o">:</span><span class="w">       </span><span class="n">vapour</span><span class="w">       </span><span class="n">https</span><span class="o">://</span><span class="n">github.com</span><span class="o">/</span><span class="n">hypertidy</span><span class="o">/</span><span class="n">vapour</span><span class="w">
+</span><span class="m">114</span><span class="o">:</span><span class="w">           </span><span class="n">wk</span><span class="w">         </span><span class="n">https</span><span class="o">://</span><span class="n">github.com</span><span class="o">/</span><span class="n">paleolimbot</span><span class="o">/</span><span class="n">wk</span><span class="w">
+</span><span class="m">115</span><span class="o">:</span><span class="w">      </span><span class="n">wkutils</span><span class="w">    </span><span class="n">https</span><span class="o">://</span><span class="n">github.com</span><span class="o">/</span><span class="n">paleolimbot</span><span class="o">/</span><span class="n">wkutils</span><span class="w">
+</span></code></pre></div></div>
+
+<p>We begin by removing the <code class="language-plaintext highlighter-rouge">http://github.com</code> prefix from each repository url, 
+resulting in a data.table with a column containing strings in the format 
+<code class="language-plaintext highlighter-rouge">&lt;repository owner&gt;/&lt;repository name&gt;</code>.</p>
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">repos</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">nc</span><span class="o">::</span><span class="n">capture_all_str</span><span class="p">(</span><span class="n">pkg.repos</span><span class="o">$</span><span class="n">repo.url</span><span class="p">,</span><span class="w">
+                             </span><span class="s2">"https://github.com/"</span><span class="p">,</span><span class="w">
+                             </span><span class="n">repo_full_name</span><span class="o">=</span><span class="s2">".*"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">repos</span><span class="w">
+             </span><span class="n">repo_full_name</span><span class="w">
+  </span><span class="m">1</span><span class="o">:</span><span class="w"> </span><span class="n">ironholds</span><span class="o">/</span><span class="n">humaniformat</span><span class="w">
+  </span><span class="m">2</span><span class="o">:</span><span class="w">        </span><span class="n">jMotif</span><span class="o">/</span><span class="n">jmotif</span><span class="o">-</span><span class="n">R</span><span class="w">
+  </span><span class="m">3</span><span class="o">:</span><span class="w">     </span><span class="n">Ironholds</span><span class="o">/</span><span class="n">olctools</span><span class="w">
+  </span><span class="m">4</span><span class="o">:</span><span class="w">  </span><span class="n">WinVector</span><span class="o">/</span><span class="n">RcppDynProg</span><span class="w">
+  </span><span class="m">5</span><span class="o">:</span><span class="w">     </span><span class="n">shabbychef</span><span class="o">/</span><span class="n">BWStest</span><span class="w">
+ </span><span class="o">---</span><span class="w">                       
+</span><span class="m">111</span><span class="o">:</span><span class="w">       </span><span class="n">thomasp85</span><span class="o">/</span><span class="n">tweenr</span><span class="w">
+</span><span class="m">112</span><span class="o">:</span><span class="w">        </span><span class="n">jlmelville</span><span class="o">/</span><span class="n">uwot</span><span class="w">
+</span><span class="m">113</span><span class="o">:</span><span class="w">       </span><span class="n">hypertidy</span><span class="o">/</span><span class="n">vapour</span><span class="w">
+</span><span class="m">114</span><span class="o">:</span><span class="w">         </span><span class="n">paleolimbot</span><span class="o">/</span><span class="n">wk</span><span class="w">
+</span><span class="m">115</span><span class="o">:</span><span class="w">    </span><span class="n">paleolimbot</span><span class="o">/</span><span class="n">wkutils</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Then we can iterate over the repositories listed above, forking and cloning each
+one. Let us call each repository in the loop <code class="language-plaintext highlighter-rouge">repo_full_name</code>.</p>
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fork_endpoint</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"POST /repos/"</span><span class="p">,</span><span class="w"> </span><span class="n">repo_full_name</span><span class="p">,</span><span class="w"> </span><span class="s2">"/forks"</span><span class="p">)</span><span class="w">
+</span><span class="n">fork_result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gh</span><span class="p">(</span><span class="n">fork_endpoint</span><span class="p">)</span><span class="w">
+
+</span><span class="n">repo</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">clone</span><span class="p">(</span><span class="n">fork_result</span><span class="o">$</span><span class="n">clone_url</span><span class="p">,</span><span class="w"> </span><span class="n">fork_result</span><span class="o">$</span><span class="n">name</span><span class="p">)</span><span class="w">
+</span><span class="n">config</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span><span class="w"> </span><span class="n">http.followRedirects</span><span class="o">=</span><span class="s1">'true'</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>After successfully cloning the repository, a new branch for the RcppDeepState 
+analysis can be created. <code class="language-plaintext highlighter-rouge">RcppDeepState</code> is the name of this new branch.</p>
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test_branch_name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"RcppDeepState"</span><span class="w">
+</span><span class="n">test_branch</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">branch_create</span><span class="p">(</span><span class="n">last_commit</span><span class="p">(</span><span class="n">repo</span><span class="p">),</span><span class="w"> </span><span class="n">test_branch_name</span><span class="p">)</span><span class="w">
+</span><span class="n">checkout</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span><span class="w"> </span><span class="n">test_branch_name</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The following step is to determine if the repository includes a legitimate 
+package. This is accomplished by checking the existence of the <code class="language-plaintext highlighter-rouge">DESCRIPTION</code> 
+file within the repository’s root: if this file exists, the repository includes 
+a valid package that can be examined using RcppDeepState; otherwise, 
+RcppDeepState cannot analyze the package.</p>
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">file.exists</span><span class="p">(</span><span class="n">file.path</span><span class="p">(</span><span class="s2">"./"</span><span class="p">,</span><span class="w"> </span><span class="n">fork_result</span><span class="o">$</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s2">"DESCRIPTION"</span><span class="p">))){</span><span class="w">
+  </span><span class="n">stop</span><span class="p">(</span><span class="s2">"The repository doesn't contain a valid package"</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>We can now use the existing <code class="language-plaintext highlighter-rouge">ci_setup</code> function to initialize the workflow file 
+within the repository. This function accepts as input the location of the 
+repository on the filesystem and a list of parameters corresponding to the 
+action’s inputs. In this scenario, we’ve specified <code class="language-plaintext highlighter-rouge">fail_ci_if_error=TRUE</code> to 
+cause the CI process to fail if an error is discovered, and <code class="language-plaintext highlighter-rouge">comment=TRUE</code> to 
+print the report comment inside the pull request that will be produced in the 
+following phase.</p>
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RcppDeepState</span><span class="o">::</span><span class="n">ci_setup</span><span class="p">(</span><span class="n">fork_result</span><span class="o">$</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fail_ci_if_error</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">comment</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The last step is to push the new changes to the forked repository and submit a 
+pull request.</p>
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># commit and push the workflow file</span><span class="w">
+</span><span class="n">add</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="s2">"./"</span><span class="p">,</span><span class="w"> </span><span class="n">fork_result</span><span class="o">$</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s2">".github"</span><span class="p">,</span><span class="w"> </span><span class="s2">"workflows"</span><span class="p">,</span><span class="w"> </span><span class="s2">"*"</span><span class="p">))</span><span class="w">
+</span><span class="n">commit</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="s2">"RcppDeepState CI Setup"</span><span class="p">)</span><span class="w">
+</span><span class="n">push</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span><span class="w"> </span><span class="s2">"origin"</span><span class="p">,</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"refs"</span><span class="p">,</span><span class="w"> </span><span class="s2">"heads"</span><span class="p">,</span><span class="w"> </span><span class="n">test_branch_name</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">),</span><span class="w">
+    </span><span class="n">credentials</span><span class="o">=</span><span class="n">cred</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># open the pull request</span><span class="w">
+</span><span class="n">pulls_endpoint</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"POST /repos/"</span><span class="p">,</span><span class="w"> </span><span class="n">fork_result</span><span class="o">$</span><span class="n">full_name</span><span class="p">,</span><span class="w"> </span><span class="s2">"/pulls"</span><span class="p">)</span><span class="w">
+</span><span class="n">pull_title</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"Analyze the package with RcppDeepState"</span><span class="w">
+</span><span class="n">pull_body</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"### RcppDeepState Analysis\nThis pull request aims to find"</span><span class="w"> 
+                   </span><span class="s2">"bugs in this R package using RcppDeepState-action"</span><span class="p">)</span><span class="w">
+</span><span class="n">gh</span><span class="p">(</span><span class="n">pulls_endpoint</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="o">=</span><span class="n">pull_title</span><span class="p">,</span><span class="w"> </span><span class="n">owner</span><span class="o">=</span><span class="n">fork_result</span><span class="o">$</span><span class="n">owner</span><span class="o">$</span><span class="n">login</span><span class="p">,</span><span class="w">
+    </span><span class="n">repo</span><span class="o">=</span><span class="n">fork_result</span><span class="o">$</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">body</span><span class="o">=</span><span class="n">pull_body</span><span class="p">,</span><span class="w"> </span><span class="n">base</span><span class="o">=</span><span class="n">fork_result</span><span class="o">$</span><span class="n">default_branch</span><span class="p">,</span><span class="w">
+    </span><span class="n">head</span><span class="o">=</span><span class="n">test_branch_name</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="final-script">Final script</h3>
+<p>We get the following script by combining all of the previous steps with the 
+solution supplied by my mentor. As you can see, a <code class="language-plaintext highlighter-rouge">batch_size</code> option has been 
+introduced to allow you to choose the number of repositories to test. This 
+option was added to prevent the creation of 115 repositories within your GitHub 
+account.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="s2">"gh"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"git2r"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"RcppDeepState"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"data.table"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">cred</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cred_token</span><span class="p">(</span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"GITHUB_PAT"</span><span class="p">)</span><span class="w">
+</span><span class="n">batch_size</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c1"># adjust the batch size</span><span class="w">
+
+</span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file.exists</span><span class="p">(</span><span class="s2">"problems.html"</span><span class="p">)){</span><span class="w">
+  </span><span class="n">download.file</span><span class="p">(</span><span class="w">
+    </span><span class="s2">"https://akhikolla.github.io./packages-folders/"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"problems.html"</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="n">prob.dt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">nc</span><span class="o">::</span><span class="n">capture_all_str</span><span class="p">(</span><span class="w">
+  </span><span class="s2">"problems.html"</span><span class="p">,</span><span class="w">
+  </span><span class="s1">'&lt;li&gt;&lt;a href="'</span><span class="p">,</span><span class="w">
+  </span><span class="n">Package</span><span class="o">=</span><span class="s2">".*?"</span><span class="p">,</span><span class="w">
+  </span><span class="s1">'[.]html"&gt;'</span><span class="p">)</span><span class="w">
+
+</span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file.exists</span><span class="p">(</span><span class="s2">"packages.rds"</span><span class="p">)){</span><span class="w">
+  </span><span class="n">download.file</span><span class="p">(</span><span class="w">
+    </span><span class="s2">"https://cloud.r-project.org/web/packages/packages.rds"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"packages.rds"</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="n">meta.mat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">readRDS</span><span class="p">(</span><span class="s2">"packages.rds"</span><span class="p">)</span><span class="w">
+</span><span class="n">meta.dt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.table</span><span class="p">(</span><span class="n">meta.mat</span><span class="p">)</span><span class="w">
+</span><span class="n">meta.prob</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">meta.dt</span><span class="p">[</span><span class="n">prob.dt</span><span class="p">,</span><span class="w"> </span><span class="n">on</span><span class="o">=</span><span class="s2">"Package"</span><span class="p">]</span><span class="w">
+
+</span><span class="n">pkg.repos</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">meta.prob</span><span class="p">[,</span><span class="w"> </span><span class="n">nc</span><span class="o">::</span><span class="n">capture_all_str</span><span class="p">(</span><span class="w">
+  </span><span class="nf">c</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span><span class="n">URL</span><span class="p">),</span><span class="w"> </span><span class="c1"># to avoid attempting to download URL.</span><span class="w">
+  </span><span class="n">repo.url</span><span class="o">=</span><span class="s2">"https://github.com/.*?/[^#/ ,]+"</span><span class="p">),</span><span class="w">
+  </span><span class="n">by</span><span class="o">=</span><span class="n">Package</span><span class="p">]</span><span class="w">
+
+
+</span><span class="n">repos</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">nc</span><span class="o">::</span><span class="n">capture_all_str</span><span class="p">(</span><span class="n">pkg.repos</span><span class="o">$</span><span class="n">repo.url</span><span class="p">,</span><span class="w">
+                             </span><span class="s2">"https://github.com/"</span><span class="p">,</span><span class="w">
+                             </span><span class="n">repo_full_name</span><span class="o">=</span><span class="s2">".*"</span><span class="p">)</span><span class="w">
+
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">repo_full_name</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">repos</span><span class="o">$</span><span class="n">repo_full_name</span><span class="p">,</span><span class="w"> </span><span class="n">batch_size</span><span class="p">)){</span><span class="w">
+  
+  </span><span class="n">fork_endpoint</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"POST /repos/"</span><span class="p">,</span><span class="w"> </span><span class="n">repo_full_name</span><span class="p">,</span><span class="w"> </span><span class="s2">"/forks"</span><span class="p">)</span><span class="w">
+  </span><span class="n">fork_result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gh</span><span class="p">(</span><span class="n">fork_endpoint</span><span class="p">)</span><span class="w">
+
+  </span><span class="n">repo</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">clone</span><span class="p">(</span><span class="n">fork_result</span><span class="o">$</span><span class="n">clone_url</span><span class="p">,</span><span class="w"> </span><span class="n">fork_result</span><span class="o">$</span><span class="n">name</span><span class="p">)</span><span class="w">
+  </span><span class="n">config</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span><span class="w"> </span><span class="n">http.followRedirects</span><span class="o">=</span><span class="s1">'true'</span><span class="p">)</span><span class="w">
+
+  </span><span class="n">test_branch_name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"RcppDeepState"</span><span class="w">
+  </span><span class="n">test_branch</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">branch_create</span><span class="p">(</span><span class="n">last_commit</span><span class="p">(</span><span class="n">repo</span><span class="p">),</span><span class="w"> </span><span class="n">test_branch_name</span><span class="p">)</span><span class="w">
+  </span><span class="n">checkout</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span><span class="w"> </span><span class="n">test_branch_name</span><span class="p">)</span><span class="w">
+
+  </span><span class="c1">### check if the repository's root contains a valid package</span><span class="w">
+  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">file.exists</span><span class="p">(</span><span class="n">file.path</span><span class="p">(</span><span class="s2">"./"</span><span class="p">,</span><span class="w"> </span><span class="n">fork_result</span><span class="o">$</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s2">"DESCRIPTION"</span><span class="p">))){</span><span class="w">
+    </span><span class="n">stop</span><span class="p">(</span><span class="s2">"The repository doesn't contain a valid package"</span><span class="p">)</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  
+  </span><span class="n">RcppDeepState</span><span class="o">::</span><span class="n">ci_setup</span><span class="p">(</span><span class="n">fork_result</span><span class="o">$</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fail_ci_if_error</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+                          </span><span class="n">comment</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+
+  </span><span class="c1"># commit and push the workflow file</span><span class="w">
+  </span><span class="n">add</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="s2">"./"</span><span class="p">,</span><span class="w"> </span><span class="n">fork_result</span><span class="o">$</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s2">".github"</span><span class="p">,</span><span class="w"> </span><span class="s2">"workflows"</span><span class="p">,</span><span class="w"> </span><span class="s2">"*"</span><span class="p">))</span><span class="w">
+  </span><span class="n">commit</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="s2">"RcppDeepState CI Setup"</span><span class="p">)</span><span class="w">
+  </span><span class="n">push</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span><span class="w"> </span><span class="s2">"origin"</span><span class="p">,</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"refs"</span><span class="p">,</span><span class="w"> </span><span class="s2">"heads"</span><span class="p">,</span><span class="w"> </span><span class="n">test_branch_name</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">),</span><span class="w">
+      </span><span class="n">credentials</span><span class="o">=</span><span class="n">cred</span><span class="p">)</span><span class="w">
+
+  </span><span class="c1"># submit a pull request  </span><span class="w">
+  </span><span class="n">pulls_endpoint</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"POST /repos/"</span><span class="p">,</span><span class="w"> </span><span class="n">fork_result</span><span class="o">$</span><span class="n">full_name</span><span class="p">,</span><span class="w"> </span><span class="s2">"/pulls"</span><span class="p">)</span><span class="w">
+  </span><span class="n">pull_title</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"Analyze the package with RcppDeepState"</span><span class="w">
+  </span><span class="n">pull_body</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"### RcppDeepState Analysis\nThis pull request aims to"</span><span class="w"> 
+                    </span><span class="s2">"find bugs in this R package using RcppDeepState-action"</span><span class="p">),</span><span class="w">
+  </span><span class="n">gh</span><span class="p">(</span><span class="n">pulls_endpoint</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="o">=</span><span class="n">pull_title</span><span class="p">,</span><span class="w"> </span><span class="n">owner</span><span class="o">=</span><span class="n">fork_result</span><span class="o">$</span><span class="n">owner</span><span class="o">$</span><span class="n">login</span><span class="p">,</span><span class="w">
+      </span><span class="n">repo</span><span class="o">=</span><span class="n">fork_result</span><span class="o">$</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">body</span><span class="o">=</span><span class="n">pull_body</span><span class="p">,</span><span class="w"> </span><span class="n">base</span><span class="o">=</span><span class="n">fork_result</span><span class="o">$</span><span class="n">default_branch</span><span class="p">,</span><span class="w">
+      </span><span class="n">head</span><span class="o">=</span><span class="n">test_branch_name</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="test">Test</h2>
+<p>Before running the preceding script, I assumed that running it with a 
+<code class="language-plaintext highlighter-rouge">batch_size</code> of 115(<code class="language-plaintext highlighter-rouge">nrow(repos$repo_full_name)</code>) would result in a massive
+generation of repositories within my GitHub account.
+As a preliminary solution, I set the <code class="language-plaintext highlighter-rouge">batch_size</code> argument to <code class="language-plaintext highlighter-rouge">2</code>, which means
+that just two packages will be examined. I explain a possible approach to avoid
+this massive production of repositories under my GitHub user profile in the 
+<a href="#future-work">Future work</a> paragraph.</p>
+
+<p>The following repositories will be tested with a <code class="language-plaintext highlighter-rouge">batch_size</code> of 2:</p>
+<ul>
+  <li><a href="https://github.com/ironholds/humaniformat">ironholds/humaniformat</a></li>
+  <li><a href="https://github.com/jMotif/jmotif-R">jMotif/jmotif-R</a></li>
+</ul>
+
+<p>Following the execution of the above script, two repositories will be 
+automatically generated by forking the originals. If you go inside the 
+repositories’ pull requests, you’ll see that a new pull request titled 
+<code class="language-plaintext highlighter-rouge">Analyze the package with RcppDeepState</code> has been automatically submitted.
+After a few minutes, when the CI checks are completed, you will see a comment 
+inside the pull request with the analysis result.</p>
+
+<h3 id="results">Results</h3>
+<p>The findings of the analysis are publicly available on Github, and they 
+highlight some issues within the evaluated packages. If we compare the results 
+to those discovered by Akhilla<sup id="fnref:1:2" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, we can see that there are some similarities.</p>
+
+<p>Here are the links to the results:</p>
+<ul>
+  <li><a href="https://github.com/FabrizioSandri/humaniformat/pull/1">humaniformat results</a></li>
+  <li><a href="https://github.com/FabrizioSandri/jmotif-R/pull/1">jmotif-R results</a></li>
+</ul>
+
+<h2 id="future-work">Future work</h2>
+<p>As previously said, creating 115 repositories will result in a in a massive
+generation of repositories within my GitHub account. One possible solution is to
+create a Github Organization and instruct the above script to fork the 
+repositories to a specific organization rather than to my GitHub account. This
+can be accomplished by passing an extra argument to the GitHub REST API: the 
+<code class="language-plaintext highlighter-rouge">organization</code> parameter; this parameter must be set to the organization’s name.
+The rest of the code will be left unchanged.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fork_endpoint</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"POST /repos/"</span><span class="p">,</span><span class="w"> </span><span class="n">repo_full_name</span><span class="p">,</span><span class="w"> </span><span class="s2">"/forks"</span><span class="p">)</span><span class="w">
+</span><span class="n">fork_result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gh</span><span class="p">(</span><span class="n">fork_endpoint</span><span class="p">,</span><span class="w"> </span><span class="n">organization</span><span class="o">=</span><span class="s2">"&lt;org name&gt;"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><a href="https://akhikolla.github.io./packages-folders/">Rcpp Packages with Issue Detected using RcppDeepState</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:1:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:1:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p><a href="https://tdhock.github.io/blog/2022/packages-on-github/">R packages on github</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:2:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p><a href="https://cran.r-project.org/web/packages/gh">CRAN package: gh</a> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p><a href="https://cran.r-project.org/web/packages/git2r">CRAN package: packages</a> <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:5" role="doc-endnote">
+      <p><a href="https://cran.r-project.org/web/packages/data.table">CRAN package: data.table</a> <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:6" role="doc-endnote">
+      <p><a href="https://github.com/FabrizioSandri/RcppDeepState">RcppDeeepState</a> <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:7" role="doc-endnote">
+      <p><a href="https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">Creating a personal access token</a> <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+  </div><a class="u-url" href="/gsoc-2022-blog/github%20action/2022/08/22/rcppdeepstate-beta-test.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/gsoc-2022-blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/gsoc-2022-blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/gsoc-2022-blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Blog for the GSOC 2022 edition | RcppDeepState</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/FabrizioSandri" target="_blank" title="FabrizioSandri"><svg class="svg-icon grey"><use xlink:href="/gsoc-2022-blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
