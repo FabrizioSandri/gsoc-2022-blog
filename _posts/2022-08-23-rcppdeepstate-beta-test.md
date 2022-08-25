@@ -97,28 +97,27 @@ fork/pull-request process mentioned above is described in the next steps.
 ```
 
 We begin by removing the `http://github.com` prefix from each repository url, 
-resulting in a data.table with a column containing strings in the format 
+resulting in with a new column containing strings in the format 
 `<repository owner>/<repository name>`. 
 ```R
-repos <- nc::capture_all_str(pkg.repos$repo.url,
-                             "https://github.com/",
-                             repo_full_name=".*")
+pkg.repos[, repo_full_name := sub("https://github.com/", "", repo.url) ]
 ```
 
 ```R
-> repos
-             repo_full_name
-  1: ironholds/humaniformat
-  2:        jMotif/jmotif-R
-  3:     Ironholds/olctools
-  4:  WinVector/RcppDynProg
-  5:     shabbychef/BWStest
- ---                       
-111:       thomasp85/tweenr
-112:        jlmelville/uwot
-113:       hypertidy/vapour
-114:         paleolimbot/wk
-115:    paleolimbot/wkutils
+> pkg.repos
+          Package                                  repo.url         repo_full_name
+  1: humaniformat https://github.com/ironholds/humaniformat ironholds/humaniformat
+  2:       jmotif        https://github.com/jMotif/jmotif-R        jMotif/jmotif-R
+  3:     olctools     https://github.com/Ironholds/olctools     Ironholds/olctools
+  4:  RcppDynProg  https://github.com/WinVector/RcppDynProg  WinVector/RcppDynProg
+  5:      BWStest     https://github.com/shabbychef/BWStest     shabbychef/BWStest
+ ---                                                                              
+111:       tweenr       https://github.com/thomasp85/tweenr       thomasp85/tweenr
+112:         uwot        https://github.com/jlmelville/uwot        jlmelville/uwot
+113:       vapour       https://github.com/hypertidy/vapour       hypertidy/vapour
+114:           wk         https://github.com/paleolimbot/wk         paleolimbot/wk
+115:      wkutils    https://github.com/paleolimbot/wkutils    paleolimbot/wkutils
+
 ```
 
 Then we can iterate over the repositories listed above, forking and cloning each
@@ -173,7 +172,7 @@ push(repo, "origin", paste("refs", "heads", test_branch_name, sep="/"),
 # open the pull request
 pulls_endpoint <- paste0("POST /repos/", fork_result$full_name, "/pulls")
 pull_title <- "Analyze the package with RcppDeepState"
-pull_body <- paste("### RcppDeepState Analysis\nThis pull request aims to find" 
+pull_body <- paste("### RcppDeepState Analysis\nThis pull request aims to find", 
                    "bugs in this R package using RcppDeepState-action")
 gh(pulls_endpoint, title=pull_title, owner=fork_result$owner$login,
     repo=fork_result$name, body=pull_body, base=fork_result$default_branch,
@@ -221,12 +220,9 @@ pkg.repos <- meta.prob[, nc::capture_all_str(
   repo.url="https://github.com/.*?/[^#/ ,]+"),
   by=Package]
 
+pkg.repos[, repo_full_name := sub("https://github.com/", "", repo.url) ]
 
-repos <- nc::capture_all_str(pkg.repos$repo.url,
-                             "https://github.com/",
-                             repo_full_name=".*")
-
-for (repo_full_name in head(repos$repo_full_name, batch_size)){
+for (repo_full_name in head(pkg.repos$repo_full_name, batch_size)){
   
   fork_endpoint <- paste0("POST /repos/", repo_full_name, "/forks")
   fork_result <- gh(fork_endpoint)
@@ -255,8 +251,8 @@ for (repo_full_name in head(repos$repo_full_name, batch_size)){
   # submit a pull request  
   pulls_endpoint <- paste0("POST /repos/", fork_result$full_name, "/pulls")
   pull_title <- "Analyze the package with RcppDeepState"
-  pull_body <- paste("### RcppDeepState Analysis\nThis pull request aims to" 
-                    "find bugs in this R package using RcppDeepState-action"),
+  pull_body <- paste("### RcppDeepState Analysis\nThis pull request aims to", 
+                    "find bugs in this R package using RcppDeepState-action")
   gh(pulls_endpoint, title=pull_title, owner=fork_result$owner$login,
       repo=fork_result$name, body=pull_body, base=fork_result$default_branch,
       head=test_branch_name)
@@ -265,7 +261,7 @@ for (repo_full_name in head(repos$repo_full_name, batch_size)){
 
 ## Test
 Before running the preceding script, I assumed that running it with a 
-`batch_size` of 115(`nrow(repos$repo_full_name)`) would result in a massive
+`batch_size` of 115(`nrow(pkg.repos$repo_full_name)`) would result in a massive
 generation of repositories within my GitHub account.
 As a preliminary solution, I set the `batch_size` argument to `2`, which means
 that just two packages will be examined. I explain a possible approach to avoid
