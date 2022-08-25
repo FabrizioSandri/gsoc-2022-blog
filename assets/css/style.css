@@ -347,7 +347,7 @@ h1 code, h2 code, h3 code, h4 code { font-size: 100%; }
 
 pre { margin-bottom: 1.5rem !important; }
 
-.post-title { margin-top: .5rem !important; }
+.post-title { margin-top: .5rem !important; text-align: left; }
 
 li h3, li h4 { margin-top: .05rem !important; margin-bottom: .05rem !important; }
 
