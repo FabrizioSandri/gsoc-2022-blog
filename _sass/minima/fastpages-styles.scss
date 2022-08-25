@@ -72,7 +72,10 @@ pre {
 }
 
 // make sure the post title doesn't have too much spacing
-.post-title { margin-top: .5rem !important; }
+.post-title { 
+    margin-top: .5rem !important; 
+    text-align: left;
+}
 
 li {
   h3, h4 {
