@@ -361,7 +361,7 @@ details.description:not([open]) summary::after { content: attr(data-close); }
 
 .footnotes { font-size: 13px !important; }
 
-.footnotes p, .footnotes li { font-size: 13px !important; }
+.footnotes p, .footnotes li { font-size: 13px !important; margin-top: 0 !important; margin-bottom: 5px !important; }
 
 .social-media-list .svg-icon, .pagination .svg-icon { width: 25px !important; height: 23px !important; }
 
