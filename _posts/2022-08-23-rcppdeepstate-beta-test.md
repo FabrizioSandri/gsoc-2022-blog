@@ -12,7 +12,7 @@ title: Beta test RcppDeepState-action on GitHub hosted CRAN packages
 ## Introduction
 My mentor has assigned me an interesting task to begin working on this week: 
 test the current RcppDeepState GitHub Action on GitHub-hosted Rcpp-based 
-packages. Akhilla, the previous RcppDeepState maintainer, had already conducted 
+packages. Akhila, the previous RcppDeepState maintainer, had already conducted 
 a similar task, however this was done locally rather than in the package 
 repository. Here's a list of all the [Rcpp-based packages where RcppDeepState found issues](https://akhikolla.github.io./packages-folders/)[^1]. 
 
@@ -29,7 +29,7 @@ bugs, receiving quick feedbacks and alerts if an error is detected;
 
 ## The problem
 At the time of writing, CRAN lists 18493 packages, 312 of which have problems, 
-according to Akhilla's report[^1]. Given this list of packages, the question is 
+according to Akhila's report[^1]. Given this list of packages, the question is 
 whether it is feasible to determine if a package is hosted on GitHub. If so, 
 can RcppDeepState be run on this repository? 
 
@@ -283,7 +283,7 @@ inside the pull request with the analysis result.
 ### Results
 The findings of the analysis are publicly available on Github, and they 
 highlight some issues within the evaluated packages. If we compare the results 
-to those discovered by Akhilla[^1], we can see that there are some similarities. 
+to those discovered by Akhila[^1], we can see that there are some similarities. 
 
 Here are the links to the results:
 * [humaniformat results](https://github.com/FabrizioSandri/humaniformat/pull/1)
