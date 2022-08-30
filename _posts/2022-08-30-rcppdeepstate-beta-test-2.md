@@ -193,8 +193,8 @@ The report comment has not been generated for ekstroem/MESS
 The report comment has not been generated for MikeJaredS/hermiter
 ```
 
-By analyzing the logs, I discovered that the were not generated because of a 
-missing library that is not installed and is not specified in the package's 
+By analyzing the logs, I discovered that the reports were not generated because 
+of a missing library that is not installed and is not specified in the package's 
 prerequisites. According to the error message for the `hermiter` package, the
 missing library is `RcppParallel`: 
 ```bash
