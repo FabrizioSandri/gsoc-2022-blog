@@ -102,7 +102,7 @@ process outlined above is described in the next steps.
 
 
 ```R
-pull_body <- paste("This PR adds a new Github Action which runs",
+pull_body_template <- paste("This PR adds a new Github Action which runs",
                    "RcppDeepState+valgrind on your package. That means the C++",
                    "functions of your package will be tested with random",
                    "inputs, and there will be a comment like this one for each",
@@ -146,7 +146,7 @@ for (repo_i in seq(min(batch_size, nrow(pkg.repos)))){
       # open a pull request in the original repository
       pulls_endpoint <- paste0("POST /repos/", repo$repo_full_name, "/pulls")
       pull_title <- "Analyze the package with RcppDeepState"
-      pull_body <- paste0(pull_body,"[here](", fork_pull_url, ").")
+      pull_body <- paste0(pull_body_template,"[here](", fork_pull_url, ").")
 
       head <- paste(organization, "RcppDeepState", sep=":")
       pull_response <- gh(pulls_endpoint, title=pull_title, body=pull_body, 
