@@ -113,7 +113,7 @@ There's still a lot to accomplish with RcppDeepstate, and I'm specifically talki
 
 Another step would be to expand RcppDeepState's datatype coverage by introducing additional datatypes, allowing RcppDeepState to run on a broader range of packages. To do this, I created a wiki article that describes how to [Add a new datatype to RcppDeepState](https://github.com/FabrizioSandri/RcppDeepState/wiki/Add-a-new-datatype-to-RcppDeepState). The scope of this page has been successfully shown thanks to Dr.Martin R. Smith's first external contribution to the RcppDeepState package. More information is available in the [dedicated blog post](https://fabriziosandri.github.io/gsoc-2022-blog/github%20action/2022/09/02/beta-test-summary.html).
 
-Another future improvement would be to provide a new option to RcppDeepState-action that allows users to choose a different fuzzer than the default one provided by libfuzzzer; Manticore and Angr are two alternative fuzzers. 
+Another future improvement would be to provide a new option to RcppDeepState-action that allows users to choose a different fuzzer than the default one provided by Deepstate; Libfuzzer, Manticore and Angr are three alternative fuzzers. 
 
 ## My GSOC experience
 My gsoc experience was incredible, something I never imagined, and it was one of the best in my career. This experience taught me a lot about working with others and contributing to open source. At the end of this experience, I can certainly say that I will spend more time to open source than the time I've spent so far. As a maintainer, I will continue to contribute to my project. 
