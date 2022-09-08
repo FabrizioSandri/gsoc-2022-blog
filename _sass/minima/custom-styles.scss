@@ -59,3 +59,13 @@ pre, code{
 pre > code{
     background-color: rgba(28, 28, 29, 0.00);
 }
+
+.recap-table * {
+    font-size: 0.9rem;
+}
+
+
+.recap-table-cell {
+    vertical-align: top;
+    width: 50%;
+}
