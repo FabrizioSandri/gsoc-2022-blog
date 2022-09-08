@@ -537,4 +537,8 @@ pre, code { background-color: rgba(28, 28, 29, 0.05); }
 
 pre > code { background-color: rgba(28, 28, 29, 0); }
 
+.recap-table * { font-size: 0.9rem; }
+
+.recap-table-cell { vertical-align: top; width: 50%; }
+
 /*# sourceMappingURL=style.css.map */
